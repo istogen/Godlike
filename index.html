@@ -109,7 +109,6 @@
         }
 
         .card i { font-size: 45px; color: #ff4d00; margin-bottom: 25px; display: block; }
-        /* ВЕРНУЛ ШРИФТ ЗАГОЛОВКОВ К КРАСИВОМУ СТАНДАРТНОМУ */
         .card h3 { font-size: 24px; margin-bottom: 15px; font-weight: 900; }
         .card p { font-size: 14px; color: var(--dim); margin-bottom: 30px; line-height: 1.6; min-height: 80px; }
         
@@ -126,7 +125,9 @@
         .rev-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .rev-name { font-weight: 900; color: #ff4d00; font-size: 15px; }
         .rev-date { font-size: 11px; color: #555; font-weight: 700; }
+        
         .stars { color: #FFD700; font-size: 10px; margin-bottom: 10px; display: block; }
+        .stars i { text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); }
 
         .footer-supp { 
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); 
@@ -164,9 +165,9 @@
     </div>
 
     <div class="stats-grid">
-        <div class="stat-box"><span id="t-orders">ЗАКАЗОВ</span><b id="c-orders">1,275</b></div>
-        <div class="stat-box"><span id="t-clients">КЛИЕНТОВ</span><b id="c-clients">837</b></div>
-        <div class="stat-box online"><span id="t-online">ОНЛАЙН</span><b id="c-online">24</b></div>
+        <div class="stat-box"><span id="t-orders">ЗАКАЗОВ</span><b id="c-orders">...</b></div>
+        <div class="stat-box"><span id="t-clients">КЛИЕНТОВ</span><b id="c-clients">...</b></div>
+        <div class="stat-box online"><span id="t-online">ОНЛАЙН</span><b id="c-online">...</b></div>
     </div>
 
     <div class="section-label" id="t-soft-label">ПРИВАТНЫЙ СОФТ</div>
@@ -221,13 +222,30 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    let ordCnt = parseInt(localStorage.getItem('ordCnt')) || 1275;
-    let cliCnt = parseInt(localStorage.getItem('cliCnt')) || 837;
+    // ЛОГИКА АВТОНОМНЫХ СЧЕТЧИКОВ (СИНХРОНИЗАЦИЯ ПО ВРЕМЕНИ)
+    // Базовая дата: 26 февраля 2026, 12:00
+    const BASE_TIMESTAMP = 1740571200000; 
+    
+    function getAutoStats() {
+        const now = Date.now();
+        const elapsedMs = Math.max(0, now - BASE_TIMESTAMP);
+        
+        // 2 заказа каждые 6 минут (360 000 мс)
+        // 1 клиент каждые 8 минут (480 000 мс)
+        let totalOrders = 1200 + Math.floor((elapsedMs / 360000) * 2);
+        let totalClients = 753 + Math.floor(elapsedMs / 480000);
+        
+        return { orders: totalOrders, clients: totalClients };
+    }
+
+    let stats = getAutoStats();
+    let ordCnt = stats.orders;
+    let cliCnt = stats.clients;
     let currentOnline = 24;
     let cur = 'ru';
     let order = {};
     let goldMode = 'buy';
-    let visibleReviews = 5;
+    let visibleReviews = 10;
 
     const loc = {
         ru: {
@@ -238,8 +256,10 @@
             period: "Выберите срок", checkout: "Оформление",
             promo: "ПРОМОКОД", total: "К оплате", more: "ПОКАЗАТЬ ЕЩЕ",
             min: "Минимум 100 голды", sym: "₽", r: 1, undetected: "БЕЗОПАСНО",
-            names: ["Иван", "Максим", "Артем", "Дмитрий", "Никита", "Александр", "Сергей", "Кирилл", "Влад", "Стас"],
-            phrases: ["Все четко, голда пришла!", "Лучший софт на рынке", "Курс просто космос", "Без бана уже неделю!", "Пришло за 2 минуты", "Админ красавчик", "Рекомендую магазин", "Топ за свои деньги"],
+            names: ["Иван", "Максим", "Артем", "Дмитрий", "Никита", "Александр", "Сергей", "Кирилл", "Влад", "Стас", "Legend_S02", "Marmok_Fan", "Dark_Knight", "Gleb_2012", "Slayer", "Standoff_King", "User_777", "Phoenix", "Zhenya", "Misha", "Kotik_Stoff", "Dragon_007", "Neo", "Skiller", "Toxa", "Danya_Top", "S02_Master", "Ghost", "Rich_Boy", "NoName", "Cyber_Sport", "Vanya_Gold", "Gleb_Stoff", "Sanyok", "Demon_S2"],
+            phrases: [
+                "Все четко, голда пришла!", "Лучший софт на рынке, советую.", "Курс просто космос, буду брать еще.", "Без бана уже неделю, все летит в голову!", "Пришло за 2 минуты, админ лучший.", "Админ красавчик, помог с настройкой софта.", "Рекомендую магазин всем друзьям.", "Топ за свои деньги, софт не лагает.", "Сначала боялся, но всё пришло быстро. Спасибо!", "Продал голду, деньги на карту капнули мгновенно.", "Софт на iOS работает идеально даже без джейла!", "Лучший сервис по Стандоффу, который я видел.", "Всё честно, без обмана.", "Голда по лучшему курсу только здесь.", "Покупаю уже 10-й раз, всё отлично.", "Чит просто разрывает паблики!", "Самая быстрая поддержка.", "Спасибо за качественный товар.", "Окупился за один вечер.", "Работает на новой версии игры!"
+            ],
             desc_and: "Мощный чит для Android. Skinchanger, Aimbot и ESP. Оптимизирован.",
             desc_ios: "Решение для iOS. Без Jailbreak. 100% Anti-ban.",
             desc_pc: "Для эмуляторов. Rage и Legit режимы. Стабильно."
@@ -252,7 +272,7 @@
             period: "Select Plan", checkout: "Checkout",
             promo: "PROMO CODE", total: "Total Price", more: "LOAD MORE",
             min: "Min 100 gold", sym: "$", r: 0.011, undetected: "UNDETECTED",
-            names: ["John", "Mike", "Alex", "Steve", "David", "Chris", "Kevin", "Jason"],
+            names: ["John", "Mike", "Alex", "Steve", "David", "Chris", "Kevin", "Jason", "Shadow_User", "S02_Player", "X-Ray", "Bolt", "Apex", "Warrior", "Hunter"],
             phrases: ["Fast delivery, thanks!", "Best software ever", "Great rates for gold", "No ban, works perfectly", "Got my order in 5 mins", "Support is helpful", "Highly recommended", "Best price on market"],
             desc_and: "Powerful Android cheat. Skinchanger, Aimbot, ESP. Optimized.",
             desc_ios: "iOS Solution. No Jailbreak. 100% Anti-ban.",
@@ -266,7 +286,7 @@
             period: "Оберіть термін", checkout: "Оформлення",
             promo: "ПРОМОКОД", total: "До сплати", more: "ПОКАЗАТИ ЩЕ",
             min: "Мінімум 100 голди", sym: "₴", r: 0.45, undetected: "БЕЗПЕЧНО",
-            names: ["Олесь", "Микола", "Тарас", "Петро", "Ігор", "Андрій", "Дмитро", "Богдан"],
+            names: ["Олесь", "Микола", "Тарас", "Петро", "Ігор", "Андрій", "Дмитро", "Богдан", "S02_Fan", "Cyber_Cossack"],
             phrases: ["Все супер, дякую!", "Кращий курс на сегодня", "Швидко прийшло", "Без бана вже довго", "Працює добре, рекомендую", "Найкращий сервіс", "Дуже задоволений"],
             desc_and: "Потужний чит для Android. Skinchanger, Aimbot, ESP.",
             desc_ios: "Для iOS. Без Jailbreak. 100% Anti-ban.",
@@ -324,7 +344,6 @@
         }
     }
 
-    // ПЛАВНАЯ АНИМАЦИЯ ПЕРЕБОРА ЧИСЕЛ
     function animateValue(id, start, end, duration) {
         if (start === end) return;
         const obj = document.getElementById(id);
@@ -332,7 +351,7 @@
         const step = (timestamp) => {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
             if (progress < 1) {
                 window.requestAnimationFrame(step);
             }
@@ -340,83 +359,57 @@
         window.requestAnimationFrame(step);
     }
 
-    // НОВАЯ ЛОГИКА ОНЛАЙНА (Медленнее и по +/- 2)
     function updateOnline() {
         const now = new Date();
         const hour = now.getHours();
         let minBound = (hour >= 0 && hour < 6) ? 4 : 17;
         let maxBound = (hour >= 0 && hour < 6) ? 20 : 35;
-        
-        let change = Math.floor(Math.random() * 5) - 2; // Перебор от -2 до +2
+        let change = Math.floor(Math.random() * 5) - 2; 
         let targetOnline = currentOnline + change;
-        
         if(targetOnline < minBound) targetOnline = minBound;
         if(targetOnline > maxBound) targetOnline = maxBound;
-
         animateValue('c-online', currentOnline, targetOnline, 1000);
         currentOnline = targetOnline;
-        
-        // Обновляем раз в 6-12 секунд для плавности
-        let nextUpdate = Math.floor(Math.random() * (12000 - 6000 + 1)) + 6000;
-        setTimeout(updateOnline, nextUpdate);
+        setTimeout(updateOnline, Math.floor(Math.random() * 6000) + 6000);
     }
 
+    // Регулярное обновление каждую минуту для точности
     setInterval(() => {
-        let old = ordCnt;
-        ordCnt++;
-        localStorage.setItem('ordCnt', ordCnt);
-        animateValue('c-orders', old, ordCnt, 800);
-        addRandomReview();
-    }, 300000);
+        let oldOrd = ordCnt;
+        let oldCli = cliCnt;
+        let freshStats = getAutoStats();
+        ordCnt = freshStats.orders;
+        cliCnt = freshStats.clients;
+        if(oldOrd !== ordCnt) animateValue('c-orders', oldOrd, ordCnt, 800);
+        if(oldCli !== cliCnt) animateValue('c-clients', oldCli, cliCnt, 800);
+        
+        // Синхронная дозагрузка отзывов (имитация новых)
+        if (reviewPool.length < 300) {
+             reviewPool.unshift(createReviewObject(0)); // Добавляем свежий отзыв в начало
+        }
+    }, 60000);
 
-    setInterval(() => {
-        let old = cliCnt;
-        cliCnt++;
-        localStorage.setItem('cliCnt', cliCnt);
-        animateValue('c-clients', old, cliCnt, 800);
-    }, 360000);
-
-    // ГЕНЕРАЦИЯ ОТЗЫВОВ С БОЛЬШИМ ИНТЕРВАЛОМ (4-8 ЧАСОВ)
-    let lastReviewHoursOffset = 0;
     function generateInitialReviews() {
-        for(let i=0; i<30; i++) {
-            reviewPool.push(createReviewObject());
+        // Генерируем 200 отзывов, разнесенных во времени
+        for(let i=0; i<200; i++) {
+            reviewPool.push(createReviewObject(i * 3)); // Разнос ~3 часа
         }
     }
 
-    function createReviewObject() {
+    function createReviewObject(offsetHours) {
         const t = loc[cur];
         const date = new Date();
-        
-        // Увеличиваем отступ на 4-8 часов для каждого следующего отзыва
-        let randomGap = Math.floor(Math.random() * (8 - 4 + 1)) + 4;
-        lastReviewHoursOffset += randomGap;
-        
-        date.setHours(date.getHours() - lastReviewHoursOffset);
+        // Устанавливаем дату назад от текущего момента
+        date.setHours(date.getHours() - offsetHours - (Math.random() * 2));
         date.setMinutes(Math.floor(Math.random() * 59));
-
-        const rating = Math.random() > 0.2 ? 5 : 4;
+        
+        const rating = Math.random() > 0.05 ? 5 : 4;
         return {
             name: t.names[Math.floor(Math.random() * t.names.length)],
             text: t.phrases[Math.floor(Math.random() * t.phrases.length)],
             stars: rating,
             date: `${date.toLocaleDateString()} ${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()}`
         };
-    }
-
-    function addRandomReview() {
-        // Для нового отзыва берем актуальное время
-        const t = loc[cur];
-        const date = new Date();
-        const rating = 5;
-        const newRev = {
-            name: t.names[Math.floor(Math.random() * t.names.length)],
-            text: t.phrases[Math.floor(Math.random() * t.phrases.length)],
-            stars: rating,
-            date: `${date.toLocaleDateString()} ${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()}`
-        };
-        reviewPool.unshift(newRev);
-        renderReviews();
     }
 
     function renderReviews() {
@@ -435,7 +428,7 @@
     }
 
     function showMore() {
-        visibleReviews += 5;
+        visibleReviews += 15;
         renderReviews();
         if(visibleReviews >= reviewPool.length) document.getElementById('btn-more').style.display = 'none';
     }
