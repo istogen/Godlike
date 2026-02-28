@@ -6,7 +6,7 @@
     <title>GODLIKE SHOP | Standoff 2</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #030303;
@@ -16,8 +16,14 @@
             --dim: #888;
             --border: rgba(255, 77, 0, 0.15);
             --glass: rgba(255, 255, 255, 0.03);
-            --gold: linear-gradient(180deg, #FFD700 0%, #FF8C00 100%);
             --orange-flow: linear-gradient(90deg, #ff4d00, #ff8c00, #ff4d00);
+        }
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -31,26 +37,69 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* Welcome Screen Style */
+        /* ===== ЗВЁЗДОЧКИ НА ФОНЕ — очень тихие ===== */
+        #global-snow {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: #ff4d00;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0%   { transform: translateY(0) rotate(0deg);     opacity: 0; }
+            5%   { opacity: 1; }
+            95%  { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ===== WELCOME SCREEN ===== */
         #intro-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
+            position: fixed; inset: 0;
+            background: #000;
+            z-index: 9999;
             display: flex; align-items: center; justify-content: center;
             flex-direction: column; text-align: center; padding: 30px;
-            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .intro-content { max-width: 500px; animation: slideUp 1s ease; }
-        .intro-logo { font-family: 'Orbitron', sans-serif; font-size: 40px; background: var(--orange-flow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .intro-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 40px;
+            background: var(--orange-flow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
         .intro-bio { font-size: 15px; color: var(--dim); line-height: 1.6; margin-bottom: 40px; }
 
-        header { text-align: center; padding: 60px 0 30px; position: relative; overflow: hidden; }
+        /* ===== HEADER ===== */
+        header {
+            text-align: center;
+            padding: 60px 0 30px;
+            position: relative;
+            z-index: 1;
+        }
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(28px, 8vw, 55px);
@@ -63,17 +112,21 @@
             -webkit-text-fill-color: transparent;
             animation: flow 3s linear infinite;
             filter: drop-shadow(0 0 10px rgba(255, 77, 0, 0.3));
-            position: relative; z-index: 2;
         }
-
         @keyframes flow { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 
-        .tagline { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 2px; margin-top: 12px; font-weight: 700; position: relative; z-index: 2;}
+        .tagline {
+            font-size: 11px; color: var(--dim);
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-top: 12px; font-weight: 700;
+        }
 
+        /* ===== ПЕРЕКЛЮЧАТЕЛЬ ВАЛЮТЫ ===== */
         .selectors {
             display: flex; gap: 10px; justify-content: center;
             background: var(--glass); padding: 7px; border-radius: 20px;
-            width: fit-content; margin: 30px auto; border: 1px solid var(--border);
+            width: fit-content; margin: 30px auto;
+            border: 1px solid var(--border);
             backdrop-filter: blur(10px);
         }
         .sel-btn {
@@ -81,112 +134,189 @@
             padding: 10px 25px; border-radius: 15px; font-size: 12px;
             font-weight: 800; cursor: pointer; transition: 0.4s;
         }
-        .sel-btn.active { background: var(--accent); color: #fff; box-shadow: 0 5px 15px rgba(255, 77, 0, 0.3); }
+        .sel-btn.active {
+            background: var(--accent); color: #fff;
+            box-shadow: 0 5px 15px rgba(255, 77, 0, 0.3);
+        }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 40px; }
+        /* ===== СТАТИСТИКА ===== */
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px; margin-bottom: 40px;
+        }
         .stat-box {
             background: var(--card); padding: 20px 10px; border-radius: 25px;
             text-align: center; border: 1px solid var(--border);
             backdrop-filter: blur(20px); transition: 0.3s;
         }
-        .stat-box span { font-size: 9px; color: var(--dim); text-transform: uppercase; font-weight: 800; display: block; margin-bottom: 5px; }
+        .stat-box span {
+            font-size: 9px; color: var(--dim); text-transform: uppercase;
+            font-weight: 800; display: block; margin-bottom: 5px;
+        }
         .stat-box b { font-size: clamp(16px, 4vw, 24px); font-weight: 900; display: block; color: #fff; }
-
         .stat-box.online b {
             color: #00ff64;
             text-shadow: 0 0 15px rgba(0, 255, 100, 0.8), 0 0 5px rgba(0, 255, 100, 0.5);
             animation: pulseGlow 2s ease-in-out infinite;
         }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
+        @keyframes pulseGlow { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 
+        /* ===== ЗАГОЛОВКИ СЕКЦИЙ ===== */
         .section-label {
-            font-size: 13px; font-weight: 900; color: #fff; text-transform: uppercase;
-            margin: 60px 0 30px; letter-spacing: 3px; display: flex; align-items: center; gap: 20px;
+            font-size: 13px; font-weight: 900; color: #fff;
+            text-transform: uppercase; margin: 60px 0 30px;
+            letter-spacing: 3px; display: flex; align-items: center; gap: 20px;
         }
-        .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+        .section-label::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
 
-        #soft-list, .gold-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
-        @media (min-width: 768px) { #soft-list, .gold-grid { grid-template-columns: 1fr 1fr; } }
+        /* ===== КАРТОЧКИ ТОВАРОВ ===== */
+        #soft-list, .gold-grid {
+            display: grid; grid-template-columns: 1fr; gap: 25px;
+        }
+        @media (min-width: 768px)  { #soft-list, .gold-grid { grid-template-columns: 1fr 1fr; } }
         @media (min-width: 1100px) { #soft-list { grid-template-columns: 1fr 1fr 1fr; } }
 
         .card {
             background: var(--card); border: 1px solid var(--border);
             border-radius: 35px; padding: 40px; position: relative;
-            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1); backdrop-filter: blur(15px);
-            overflow: hidden; text-align: left;
+            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            backdrop-filter: blur(15px); overflow: hidden; text-align: left;
         }
         .card.center-text { text-align: center; }
-        .card:hover { border-color: #ff4d00; transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-
-        .snow-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
-            mask-image: linear-gradient(to top, transparent 0%, black 30%, black 100%);
-            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%, black 100%);
-        }
-
-        .snowflake {
-            position: absolute; color: #ff4d00; font-size: 10px;
-            top: -20px; animation: fall linear infinite;
-            text-shadow: 0 0 5px rgba(255, 77, 0, 0.4);
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(220px) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-30px) rotate(360deg); opacity: 0; }
+        .card:hover {
+            border-color: #ff4d00;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
         .status-badge {
             position: absolute; top: 25px; right: 25px;
             background: rgba(0, 255, 100, 0.1); color: #00ff64;
-            padding: 6px 14px; border-radius: 50px; font-size: 10px; font-weight: 900;
-            border: 1px solid rgba(0, 255, 100, 0.2);
-            z-index: 1;
+            padding: 6px 14px; border-radius: 50px;
+            font-size: 10px; font-weight: 900;
+            border: 1px solid rgba(0, 255, 100, 0.2); z-index: 1;
         }
 
         .card i, .card h3, .card p, .card .buy-btn { position: relative; z-index: 2; }
 
         .card i {
-            font-size: 45px;
-            color: #ff4d00;
-            margin-bottom: 25px;
-            display: block;
-            filter: drop-shadow(0 0 15px rgba(255,77,0,0.4));
-            transition: 0.3s;
+            font-size: 45px; color: #ff4d00; margin-bottom: 25px;
+            display: block; filter: drop-shadow(0 0 15px rgba(255, 77, 0, 0.4)); transition: 0.3s;
         }
         .card.center-text i { margin-left: auto; margin-right: auto; }
         .card h3 { font-size: 24px; margin-bottom: 15px; font-weight: 900; }
-        .card p { font-size: 14px; color: var(--dim); margin-bottom: 30px; line-height: 1.6; min-height: 80px; }
+        .card p  { font-size: 14px; color: var(--dim); margin-bottom: 30px; line-height: 1.6; min-height: 80px; }
         .card.center-text p { min-height: auto; }
 
-        .rev-item { background: var(--card); border-radius: 25px; padding: 30px; border: 1px solid var(--border); margin-bottom: 20px; animation: slideUp 0.5s ease forwards; }
+        /* ===== FAQ ===== */
+        .faq-grid {
+            display: grid; grid-template-columns: 1fr;
+            gap: 16px; margin-bottom: 40px;
+        }
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 35px;
+            padding: 28px 35px;
+            backdrop-filter: blur(15px);
+            transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .faq-item::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--accent);
+            border-radius: 4px 0 0 4px;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .faq-item:hover {
+            border-color: rgba(255, 77, 0, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        .faq-item.active {
+            border-color: rgba(255, 77, 0, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 77, 0, 0.08);
+        }
+        .faq-item.active::before { opacity: 1; }
+
+        .faq-question {
+            font-weight: 900; font-size: 15px; color: #fff;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 15px;
+        }
+        .faq-question-icon {
+            width: 38px; height: 38px; min-width: 38px;
+            background: rgba(255, 77, 0, 0.1);
+            border: 1px solid rgba(255, 77, 0, 0.2);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: #ff4d00; font-size: 13px; transition: 0.3s;
+        }
+        .faq-item.active .faq-question-icon {
+            background: rgba(255, 77, 0, 0.2);
+            transform: rotate(180deg);
+        }
+        .faq-divider {
+            display: none; width: 100%; height: 1px;
+            background: var(--border); margin-top: 18px;
+        }
+        .faq-item.active .faq-divider { display: block; }
+
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s, margin-top 0.3s;
+            color: var(--dim); font-size: 14px; line-height: 1.7; opacity: 0;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px; margin-top: 18px; opacity: 1;
+        }
+
+        /* ===== ОТЗЫВЫ ===== */
+        .rev-item {
+            background: var(--card); border-radius: 25px; padding: 30px;
+            border: 1px solid var(--border); margin-bottom: 20px;
+            animation: slideUp 0.5s ease forwards;
+        }
         .rev-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .rev-name { font-weight: 900; color: #ff4d00; font-size: 15px; }
-        .rev-date { font-size: 11px; color: #555; font-weight: 700; }
+        .rev-name  { font-weight: 900; color: #ff4d00; font-size: 15px; }
+        .rev-date  { font-size: 11px; color: #555; font-weight: 700; }
+        .stars     { color: #FFD700; font-size: 10px; margin-bottom: 10px; display: block; }
+        .stars i   { text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); }
 
-        .stars { color: #FFD700; font-size: 10px; margin-bottom: 10px; display: block; }
-        .stars i { text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); }
-
+        /* ===== КНОПКА ПОДДЕРЖКИ (фиксированная) ===== */
         .footer-supp {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             width: calc(100% - 40px); max-width: 440px;
             background: rgba(15, 15, 15, 0.9);
-            color: #fff; padding: 22px; border-radius: 25px; text-align: center;
-            font-weight: 800; z-index: 100; backdrop-filter: blur(15px);
+            color: #fff; padding: 22px; border-radius: 25px;
+            text-align: center; font-weight: 800;
+            z-index: 100; backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 77, 0, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            transition: 0.3s;
-            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: 0.3s; cursor: pointer;
         }
+        .footer-supp:hover { border-color: #ff4d00; }
 
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal { background: #080808; border: 1px solid var(--border); width: 100%; max-width: 400px; padding: 40px; border-radius: 40px; text-align: center; position: relative; }
-
+        /* ===== ОВЕРЛЕИ И МОДАЛЫ ===== */
+        .overlay {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 1000; display: none;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal {
+            background: #080808; border: 1px solid var(--border);
+            width: 100%; max-width: 400px; padding: 40px;
+            border-radius: 40px; text-align: center; position: relative;
+        }
         .close-btn {
             position: absolute; top: 20px; right: 25px;
             font-size: 22px; color: var(--dim); cursor: pointer;
@@ -194,9 +324,27 @@
         }
         .close-btn:hover { color: #fff; transform: rotate(90deg); }
 
-        .buy-btn { background: var(--accent); color: #fff; border: none; width: 100%; padding: 20px; border-radius: 20px; font-weight: 900; font-size: 14px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
-        input { width: 100%; background: #111; border: 1px solid var(--border); padding: 22px; border-radius: 22px; color: #fff; margin: 20px 0; text-align: center; font-size: 18px; font-weight: 800; outline: none; }
-        .opt { background: #111; padding: 20px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
+        /* ===== ОБЩИЕ ЭЛЕМЕНТЫ ===== */
+        .buy-btn {
+            background: var(--accent); color: #fff; border: none;
+            width: 100%; padding: 20px; border-radius: 20px;
+            font-weight: 900; font-size: 14px; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s;
+        }
+        .buy-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        input {
+            width: 100%; background: #111; border: 1px solid var(--border);
+            padding: 22px; border-radius: 22px; color: #fff;
+            margin: 20px 0; text-align: center;
+            font-size: 18px; font-weight: 800; outline: none;
+        }
+
+        .opt {
+            background: #111; padding: 20px; border-radius: 20px;
+            margin-bottom: 12px; display: flex; justify-content: space-between;
+            border: 1px solid var(--border); cursor: pointer; transition: 0.2s;
+        }
         .opt:hover { border-color: #ff4d00; }
 
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -204,38 +352,47 @@
 </head>
 <body>
 
+<!-- Звёздочки на фоне -->
+<div id="global-snow"></div>
+
+<!-- Приветственный экран -->
 <div id="intro-overlay">
     <div class="intro-content">
         <div class="intro-logo">GODLIKE SHOP</div>
         <p class="intro-bio">
-            Добро пожаловать в проект №1 по Standoff 2. Мы создаем и поставляем приватный софт с 2023 года. Нам доверяют более 1000 клиентов благодаря максимальной безопасности и моментальной поддержке.
+            Добро пожаловать в проект №1 по Standoff 2. Мы создаём и поставляем приватный софт с 2023 года.
+            Нам доверяют более 1000 клиентов благодаря максимальной безопасности и моментальной поддержке.
         </p>
         <button class="buy-btn" onclick="closeIntro()">ПРОДОЛЖИТЬ</button>
     </div>
 </div>
 
 <div class="container">
+
     <header>
-        <div id="header-snow" class="snow-container"></div>
         <div class="logo">GODLIKE SHOP</div>
         <div id="t-tag" class="tagline">LOADING...</div>
     </header>
 
+    <!-- Валюта -->
     <div class="selectors">
         <button id="btn-ru" class="sel-btn active" onclick="setLocale('ru')">RUB</button>
-        <button id="btn-en" class="sel-btn" onclick="setLocale('en')">USD</button>
-        <button id="btn-ua" class="sel-btn" onclick="setLocale('ua')">UAH</button>
+        <button id="btn-en" class="sel-btn"        onclick="setLocale('en')">USD</button>
+        <button id="btn-ua" class="sel-btn"        onclick="setLocale('ua')">UAH</button>
     </div>
 
+    <!-- Статистика -->
     <div class="stats-grid">
         <div class="stat-box"><span id="t-orders">ЗАКАЗОВ</span><b id="c-orders">...</b></div>
         <div class="stat-box"><span id="t-clients">КЛИЕНТОВ</span><b id="c-clients">...</b></div>
         <div class="stat-box online"><span id="t-online">ОНЛАЙН</span><b id="c-online">...</b></div>
     </div>
 
+    <!-- Приватный Софт -->
     <div class="section-label" id="t-soft-label">ПРИВАТНЫЙ СОФТ</div>
     <div id="soft-list"></div>
 
+    <!-- Голда -->
     <div class="section-label" id="t-gold-label">ИГРОВАЯ ВАЛЮТА</div>
     <div class="gold-grid">
         <div class="card center-text">
@@ -252,15 +409,27 @@
         </div>
     </div>
 
+    <!-- FAQ -->
+    <div class="section-label" id="t-faq-label">FAQ</div>
+    <div class="faq-grid" id="faq-container"></div>
+
+    <!-- Отзывы -->
     <div class="section-label" id="t-rev-label">ОТЗЫВЫ</div>
     <div id="reviews-container"></div>
-    <button class="sel-btn" id="btn-more" style="width:100%; margin: 20px 0; background: var(--glass);" onclick="showMore()">ПОКАЗАТЬ ЕЩЕ</button>
+    <button class="sel-btn" id="btn-more"
+        style="width:100%; margin: 20px 0; background: var(--glass);"
+        onclick="showMore()">ПОКАЗАТЬ ЕЩЕ
+    </button>
+
 </div>
 
+<!-- Поддержка (фиксированная кнопка) -->
 <div class="footer-supp" onclick="window.open('https://t.me/godlike_supp')">
-    <i class="fa-brands fa-telegram" style="margin-right:10px; color:#ff4d00;"></i> <span id="t-supp">СВЯЗАТЬСЯ С ПОДДЕРЖКОЙ</span>
+    <i class="fa-brands fa-telegram" style="margin-right:10px; color:#ff4d00;"></i>
+    <span id="t-supp">СВЯЗАТЬСЯ С ПОДДЕРЖКОЙ</span>
 </div>
 
+<!-- Модал выбора подписки -->
 <div id="m-price" class="overlay" onclick="closeModals()">
     <div class="modal" onclick="event.stopPropagation()">
         <i class="fa-solid fa-xmark close-btn" onclick="closeModals()"></i>
@@ -269,6 +438,7 @@
     </div>
 </div>
 
+<!-- Модал голды -->
 <div id="m-gold" class="overlay" onclick="closeModals()">
     <div class="modal" onclick="event.stopPropagation()">
         <i class="fa-solid fa-xmark close-btn" onclick="closeModals()"></i>
@@ -276,19 +446,26 @@
         <p style="font-size:12px; color:var(--dim); margin-top:10px;" id="t-min-gold">Минимум 100 голды</p>
         <input type="number" id="gold-input" placeholder="100" oninput="calcGold()">
         <div style="margin:20px 0;">
-            <div id="t-total-gold-label" style="font-size:11px; color:var(--dim); text-transform: uppercase;">ИТОГО:</div>
-            <b id="gold-final-val" style="font-size:36px; color:#ff4d00; display: block; min-height: 45px; transition: 0.3s;">0</b>
+            <div id="t-total-gold-label" style="font-size:11px; color:var(--dim); text-transform:uppercase;">ИТОГО:</div>
+            <b id="gold-final-val" style="font-size:36px; color:#ff4d00; display:block; min-height:45px; transition:0.3s;">0</b>
         </div>
         <button class="buy-btn" id="t-gold-cont" onclick="confirmGold()">ПРОДОЛЖИТЬ</button>
     </div>
 </div>
 
+<!-- Модал оплаты -->
 <div id="m-pay" class="overlay" onclick="closeModals()">
     <div class="modal" onclick="event.stopPropagation()">
         <i class="fa-solid fa-xmark close-btn" onclick="closeModals()"></i>
         <h3 id="t-checkout-title">ОПЛАТА</h3>
         <input type="text" id="promo-in" placeholder="ПРОМОКОД" oninput="calc()">
-        <div style="margin:20px 0;"><div id="t-total-label" style="font-size:11px; color:var(--dim); text-transform: uppercase;">К ОПЛАТЕ:</div><b id="final-val" style="font-size:42px; color:#ff4d00;">0</b></div>
+        <div style="margin:20px 0;">
+            <div id="t-total-label" style="font-size:11px; color:var(--dim); text-transform:uppercase;">К ОПЛАТЕ:</div>
+            <b id="final-val" style="font-size:42px; color:#ff4d00;">0</b>
+        </div>
+        <div style="font-size:11px; color:var(--dim); margin-bottom:18px;">
+            ≈ <span id="usdt-equiv">0</span> USDT
+        </div>
         <button class="buy-btn" style="background:#fff; color:#000; margin-bottom:12px;" id="t-pay-card" onclick="finish('CARD')">КАРТА / СБП</button>
         <button class="buy-btn" id="t-pay-crypto" onclick="finish('USDT')">КРИПТОВАЛЮТА (USDT)</button>
     </div>
@@ -298,26 +475,12 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    function closeIntro() {
-        document.getElementById('intro-overlay').style.opacity = '0';
-        setTimeout(() => document.getElementById('intro-overlay').style.display = 'none', 800);
-    }
+    // ===== КОНФИГ =====
+    const USDT_RATE_RUB = 90; // 1 USDT = 90 ₽ (обновляй вручную)
 
+    // ===== СТЕЙТ =====
     const BASE_TIMESTAMP = 1740571200000;
-
-    function getAutoStats() {
-        const now = Date.now();
-        const elapsedMs = Math.max(0, now - BASE_TIMESTAMP);
-        // Изменил стартовые значения на 1600+ заказов и 1000+ клиентов
-        let totalOrders = 1642 + Math.floor(elapsedMs / 63000000);
-        let totalClients = 1058 + Math.floor(elapsedMs / 151200000);
-        return { orders: totalOrders, clients: totalClients };
-    }
-
-    let stats = getAutoStats();
-    let ordCnt = stats.orders;
-    let cliCnt = stats.clients;
-    let currentOnline = 10;
+    let ordCnt, cliCnt, currentOnline = 10;
     let cur = 'ru';
     let order = {};
     let goldMode = 'buy';
@@ -325,68 +488,154 @@
     let reviewPool = [];
     let usedNames = new Set();
 
+    function getAutoStats() {
+        const elapsed = Math.max(0, Date.now() - BASE_TIMESTAMP);
+        return {
+            orders:  1642 + Math.floor(elapsed / 63000000),
+            clients: 1058 + Math.floor(elapsed / 151200000)
+        };
+    }
+    const s = getAutoStats();
+    ordCnt = s.orders;
+    cliCnt = s.clients;
+
+    // ===== ЛОКАЛИЗАЦИЯ =====
     const loc = {
         ru: {
             tag: "Магазин №1 в СНГ по Standoff 2 • Работаем с 2023 года",
             orders: "ЗАКАЗОВ", clients: "КЛИЕНТОВ", online: "ОНЛАЙН",
-            soft: "Приватный Софт", gold: "Игровая Валюта", rev: "ОТЗЫВЫ",
+            soft: "ПРИВАТНЫЙ СОФТ", gold: "ИГРОВАЯ ВАЛЮТА", rev: "ОТЗЫВЫ",
             buy: "КУПИТЬ", sell: "ПРОДАТЬ", supp: "СВЯЗАТЬСЯ С ПОДДЕРЖКОЙ",
             period: "Выберите срок", checkout: "Оформление",
-            promo: "ПРОМОКОД", total: "К ОПЛАТЕ", receive: "ВЫ ПОЛУЧИТЕ", more: "ПОКАЗАТЬ ЕЩЕ",
+            total: "К ОПЛАТЕ", receive: "ВЫ ПОЛУЧИТЕ", more: "ПОКАЗАТЬ ЕЩЕ",
             min: "Минимум 100 голды", sym: "₽", r: 1, undetected: "БЕЗОПАСНО",
-            phrases: ["норм чит", "имба чит)", "10/10", "все с кайфом", "софт пушка!", "разъеб", "заебись работает", "беру не первый раз!!", "админ топ", "всё чётко)", "без наеба", "софт просто имба!", "разнос", "не отлетаю уже месяц", "кайфарик", "всё ровно", "выдали быстро, от души", "работает спс", "пушка гонка", "лучший магаз!", "советую всем", "чит летит", "все скины открыл)", "найс", "всё гуд!!", "топчик", "респект", "взе гуд", "чит афигеный", "админу респ"],
-            desc_and: "Мощный чит для Android. Skinchanger, Aimbot и ESP. Оптимизирован.",
-            desc_ios: "Решение для iOS. Без Jailbreak. 100% Anti-ban.",
-            desc_pc: "Для эмуляторов. Rage и Legit режимы. Стабильно.",
-            desc_serv: "Билдер читов. Создавай собственные читы и продавай их.",
             buyGold: "КУПИТЬ ГОЛДУ", sellGold: "ПРОДАТЬ ГОЛДУ", cont: "ПРОДОЛЖИТЬ",
-            rate_text: "Курс"
+            rate_text: "Курс",
+            desc_and:  "Мощный чит для Android. Skinchanger, Aimbot и ESP. Оптимизирован под все устройства.",
+            desc_ios:  "Решение для iOS. Без Jailbreak. 100% Anti-ban. Моментальная установка.",
+            desc_pc:   "Для эмуляторов. Rage и Legit режимы. Стабильная работа.",
+            desc_serv: "Билдер читов. Создавай собственные читы и продавай их.",
+            phrases: [
+                "норм чит", "имба чит)", "10/10", "все с кайфом", "софт пушка!", "заебись работает",
+                "беру не первый раз!!", "админ топ", "всё чётко)", "без наеба", "софт просто имба!", "разнос",
+                "не отлетаю уже месяц", "кайфарик", "всё ровно", "выдали быстро, от души", "работает спс",
+                "лучший магаз!", "советую всем", "чит летит", "все скины открыл)", "найс",
+                "всё гуд!!", "топчик", "💯 рекомендую", "бомба, не чит а сказка", "полетел катку рвать",
+                "лучшее вложение денег", "наконец-то нормальный софт", "без лагов, всё чётко",
+                "аим божественный", "купил – не пожалел", "скины все мои теперь", "удивили качеством",
+                "давно искал такое", "ребята молодцы, помогли с установкой", "отвечают быстро",
+                "второй раз беру, не подводит", "🔥🔥🔥", "👌🏻", "чит афигеный", "админу респ"
+            ],
+            faq: [
+                { q: "Как быстро приходит товар после оплаты?",
+                  a: "Обычно в течение 5–10 минут после подтверждения платежа. Если задержка — напишите в поддержку." },
+                { q: "Какие способы оплаты вы принимаете?",
+                  a: "Мы принимаем карты РФ (СБП), а также криптовалюту USDT через CryptoBot." },
+                { q: "Есть ли гарантия на софт?",
+                  a: "Да, мы даём гарантию на отсутствие банов в течение всего срока подписки." },
+                { q: "Можно ли продать вам голду?",
+                  a: "Да, нажмите «ПРОДАТЬ ГОЛДУ» и следуйте инструкциям. Оплата переводом на карту." },
+                { q: "Как установить чит на iOS без Jailbreak?",
+                  a: "После оплаты вы получите пошаговую инструкцию. Установка занимает 2–3 минуты через наш профиль подписи." },
+                { q: "Работает ли чит после обновлений игры?",
+                  a: "Мы обновляем все продукты в течение 24 часов после выхода патча. Уведомление придёт в бот." }
+            ]
         },
         en: {
             tag: "#1 Standoff 2 Store in CIS • Since 2023",
             orders: "ORDERS", clients: "CLIENTS", online: "ONLINE",
-            soft: "Private Software", gold: "Game Currency", rev: "REVIEWS",
+            soft: "PRIVATE SOFTWARE", gold: "GAME CURRENCY", rev: "REVIEWS",
             buy: "BUY", sell: "SELL", supp: "CONTACT SUPPORT",
             period: "Select Plan", checkout: "Checkout",
-            promo: "PROMO CODE", total: "TOTAL PRICE", receive: "YOU WILL RECEIVE", more: "LOAD MORE",
+            total: "TOTAL PRICE", receive: "YOU WILL RECEIVE", more: "LOAD MORE",
             min: "Min 100 gold", sym: "$", r: 0.011, undetected: "UNDETECTED",
-            phrases: ["nice cheat", "OP)", "10/10", "all good!", "dope software", "fucking amazing", "works perfect", "buying again", "admin is chad!", "neat", "no scam", "just imba", "destroying lobbies)", "no ban for a month", "chilling", "smooth", "fast delivery thanks!", "works ty", "fire", "best shop ever", "highly recommended", "godly aim", "love it", "legit!!"],
-            desc_and: "Powerful Android cheat. Skinchanger, Aimbot, ESP. Optimized.",
-            desc_ios: "iOS Solution. No Jailbreak. 100% Anti-ban.",
-            desc_pc: "For Emulators. Rage & Legit modes. Stable.",
-            desc_serv: "Cheat builder. Create your own cheats and sell them.",
             buyGold: "BUY GOLD", sellGold: "SELL GOLD", cont: "CONTINUE",
-            rate_text: "Rate"
+            rate_text: "Rate",
+            desc_and:  "Powerful Android cheat. Skinchanger, Aimbot, ESP. Optimized for all devices.",
+            desc_ios:  "iOS solution. No Jailbreak. 100% Anti-ban. Instant setup.",
+            desc_pc:   "For Emulators. Rage & Legit modes. Stable performance.",
+            desc_serv: "Cheat builder. Create your own cheats and sell them.",
+            phrases: [
+                "nice cheat", "OP)", "10/10", "all good!", "dope software", "works perfect",
+                "buying again", "admin is chad!", "neat", "no scam", "just imba", "destroying lobbies)",
+                "no ban for a month", "smooth", "fast delivery thanks!", "works ty", "fire",
+                "best shop ever", "highly recommended", "godly aim", "love it", "legit!!",
+                "😍😍😍", "insane", "better than expected", "unreal aimbot", "got all skins instantly",
+                "worth every penny", "customer support is awesome", "will buy again",
+                "absolutely undetected", "finally a working cheat", "no lags, smooth af"
+            ],
+            faq: [
+                { q: "How fast is delivery after payment?",
+                  a: "Usually within 5–10 minutes after payment confirmation. If delayed, contact support." },
+                { q: "What payment methods do you accept?",
+                  a: "We accept Russian cards (SBP) and USDT cryptocurrency via CryptoBot." },
+                { q: "Is there a guarantee on the software?",
+                  a: "Yes, we guarantee no bans for the entire subscription period." },
+                { q: "Can I sell gold to you?",
+                  a: "Yes, click the 'SELL GOLD' button and follow the instructions. Payment by card transfer." },
+                { q: "How to install cheat on iOS without Jailbreak?",
+                  a: "After payment you'll receive step-by-step instructions. Installation takes 2–3 minutes via our signing profile." },
+                { q: "Does the cheat work after game updates?",
+                  a: "We update all products within 24 hours after a game patch. You'll get a bot notification." }
+            ]
         },
         ua: {
             tag: "Магазин №1 в СНД по Standoff 2 • Працюємо з 2023 року",
             orders: "ЗАМОВЛЕНЬ", clients: "КЛІЄНТІВ", online: "ОНЛАЙН",
-            soft: "Приватний Софт", gold: "Ігровая Валюта", rev: "ВІДГУКИ",
+            soft: "ПРИВАТНИЙ СОФТ", gold: "ІГРОВА ВАЛЮТА", rev: "ВІДГУКИ",
             buy: "КУПИТИ", sell: "ПРОДАТИ", supp: "ЗВ'ЯЗОК З ПІДТРИМКОЮ",
             period: "Оберіть термін", checkout: "Оформлення",
-            promo: "ПРОМОКОД", total: "ДО СПЛАТИ", receive: "ВИ ОТРИМАЄТЕ", more: "ПОКАЗАТЬ ЕЩЕ",
+            total: "ДО СПЛАТИ", receive: "ВИ ОТРИМАЄТЕ", more: "ПОКАЗАТИ ЩЕ",
             min: "Мінімум 100 голди", sym: "₴", r: 0.45, undetected: "БЕЗПЕЧНО",
-            phrases: ["норм чіт", "імба)", "10/10", "все з кайфом!", "софт пушка", "розйоб", "заєбісь працює", "беру не вперше", "адмін топ!", "все чітко", "без найобу", "софт просто имба", "рознос", "не відлітаю вже місяць)", "кайфарік", "все рівно", "видали швидко, від душі", "працює дяк!", "пушка гонка", "кращий магазин", "рекомендую!", "чіт топ", "все працює", "дякую"],
-            desc_and: "Потужний чит для Android. Skinchanger, Aimbot, ESP.",
-            desc_ios: "Для iOS. Без Jailbreak. 100% Anti-ban.",
-            desc_pc: "Для емуляторів. Rage та Legit. Стабільно.",
+            buyGold: "КУПИТИ ГОЛДУ", sellGold: "ПРОДАТИ ГОЛДУ", cont: "ПРОДОВЖИТИ",
+            rate_text: "Курс",
+            desc_and:  "Потужний чит для Android. Skinchanger, Aimbot, ESP. Оптимізований.",
+            desc_ios:  "Для iOS. Без Jailbreak. 100% Anti-ban. Моментальне встановлення.",
+            desc_pc:   "Для емуляторів. Rage та Legit. Стабільна робота.",
             desc_serv: "Білдер читів. Створюй власні чити та продавай їх.",
-            buyGold: "КУПИТИ ГОЛДУ", sellGold: "ПРОДАТЬ ГОЛДУ", cont: "ПРОДОВЖИТИ",
-            rate_text: "Курс"
+            phrases: [
+                "норм чіт", "імба)", "10/10", "все з кайфом!", "софт пушка", "заєбісь працює",
+                "беру не вперше", "адмін топ!", "все чітко", "без найобу", "рознос",
+                "не відлітаю вже місяць)", "кайфарік", "видали швидко, від душі", "працює дяк!",
+                "кращий магазин", "рекомендую!", "чіт топ", "дякую", "🔥🔥 укр софт топ",
+                "👌🏻 все ок", "найкраще", "аім божественний", "купив і радію", "супер, друзі в шоці"
+            ],
+            faq: [
+                { q: "Як швидко надходить товар після оплати?",
+                  a: "Зазвичай протягом 5–10 хвилин після підтвердження платежу. Якщо затримка — напишіть у підтримку." },
+                { q: "Які способи оплати ви приймаєте?",
+                  a: "Ми приймаємо картки (СБП) та криптовалюту USDT через CryptoBot." },
+                { q: "Чи є гарантія на софт?",
+                  a: "Так, ми даємо гарантію на відсутність банів протягом усього терміну підписки." },
+                { q: "Чи можна продати вам голду?",
+                  a: "Так, натисніть «ПРОДАТИ ГОЛДУ» та дотримуйтесь інструкцій." },
+                { q: "Як встановити чіт на iOS без Jailbreak?",
+                  a: "Після оплати отримаєте покрокову інструкцію. Встановлення займає 2–3 хвилини." },
+                { q: "Чи працює чіт після оновлень гри?",
+                  a: "Ми оновлюємо всі продукти протягом 24 годин після патча. Сповіщення прийде в бот." }
+            ]
         }
     };
 
     const products = {
         'Android Assistant': { icon: 'fa-android', type: 'brands', key: 'desc_and', plans: { '7 days': 349, '30 days': 799, '90 days': 1899 } },
-        'iPhone Assistant': { icon: 'fa-apple', type: 'brands', key: 'desc_ios', plans: { '7 days': 399, '30 days': 899, '90 days': 2499 } },
-        'PC Assistant': { icon: 'fa-display', type: 'solid', key: 'desc_pc', plans: { '7 days': 299, '30 days': 699, '90 days': 1699 } },
-        'Server Assistant': { icon: 'fa-server', type: 'solid', key: 'desc_serv', plans: { '7 days': 2799, 'Lifetime': 27999 } }
+        'iPhone Assistant': { icon: 'fa-apple',   type: 'brands', key: 'desc_ios', plans: { '7 days': 399, '30 days': 899, '90 days': 2499 } },
+        'PC Assistant':     { icon: 'fa-display', type: 'solid',  key: 'desc_pc',  plans: { '7 days': 299, '30 days': 699, '90 days': 1699 } },
+        'Server Assistant': { icon: 'fa-server',  type: 'solid',  key: 'desc_serv',plans: { '7 days': 2799, 'Lifetime': 27999 } }
     };
 
+    // ===== ВСПОМОГАТЕЛЬНЫЕ =====
     function closeModals() {
         document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
     }
 
+    function closeIntro() {
+        const el = document.getElementById('intro-overlay');
+        el.style.opacity = '0';
+        setTimeout(() => el.style.display = 'none', 800);
+    }
+
+    // ===== ЛОКАЛЬ =====
     function setLocale(l) {
         cur = l;
         document.querySelectorAll('.sel-btn').forEach(b => b.classList.remove('active'));
@@ -394,108 +643,282 @@
         generateInitialReviews();
         updateUI();
         renderReviews();
+        renderFAQ();
         createSnowflakes();
     }
 
     function updateUI() {
         const t = loc[cur];
-        document.getElementById('t-tag').innerText = t.tag;
-        document.getElementById('t-orders').innerText = t.orders;
-        document.getElementById('t-clients').innerText = t.clients;
-        document.getElementById('t-online').innerText = t.online;
-        document.getElementById('c-orders').innerText = ordCnt.toLocaleString();
-        document.getElementById('c-clients').innerText = cliCnt.toLocaleString();
+        document.getElementById('t-tag').innerText      = t.tag;
+        document.getElementById('t-orders').innerText   = t.orders;
+        document.getElementById('t-clients').innerText  = t.clients;
+        document.getElementById('t-online').innerText   = t.online;
+        document.getElementById('c-orders').innerText   = ordCnt.toLocaleString();
+        document.getElementById('c-clients').innerText  = cliCnt.toLocaleString();
         document.getElementById('t-soft-label').innerText = t.soft;
         document.getElementById('t-gold-label').innerText = t.gold;
-        document.getElementById('t-rev-label').innerText = t.rev;
-
-        document.getElementById('t-buy-btn-title').innerText = t.buyGold;
+        document.getElementById('t-rev-label').innerText  = t.rev;
+        document.getElementById('t-faq-label').innerText  = 'FAQ';
+        document.getElementById('t-buy-btn-title').innerText  = t.buyGold;
         document.getElementById('t-sell-btn-title').innerText = t.sellGold;
-        document.getElementById('t-buy-btn').innerText = t.buy;
+        document.getElementById('t-buy-btn').innerText  = t.buy;
         document.getElementById('t-sell-btn').innerText = t.sell;
-
-        document.getElementById('t-supp').innerText = t.supp;
-        document.getElementById('t-rate-buy').innerText = `${t.rate_text}: ${(0.65 * t.r).toFixed(2)} ${t.sym}`;
-        document.getElementById('t-rate-sell').innerText = `${t.rate_text}: ${(0.74 * t.r).toFixed(2)} ${t.sym}`;
-        document.getElementById('btn-more').innerText = t.more;
-        document.getElementById('t-period-title').innerText = t.period;
+        document.getElementById('t-supp').innerText     = t.supp;
+        document.getElementById('t-rate-buy').innerText  = `${t.rate_text}: ${(0.65 * t.r).toFixed(2)} ${t.sym} / gold`;
+        document.getElementById('t-rate-sell').innerText = `${t.rate_text}: ${(0.74 * t.r).toFixed(2)} ${t.sym} / gold`;
+        document.getElementById('btn-more').innerText    = t.more;
+        document.getElementById('t-period-title').innerText   = t.period;
         document.getElementById('t-checkout-title').innerText = t.checkout;
-        document.getElementById('t-total-label').innerText = t.total;
-        document.getElementById('t-min-gold').innerText = t.min;
-        document.getElementById('t-gold-cont').innerText = t.cont;
+        document.getElementById('t-total-label').innerText    = t.total;
+        document.getElementById('t-min-gold').innerText       = t.min;
+        document.getElementById('t-gold-cont').innerText      = t.cont;
 
+        // Рендер товаров
         const list = document.getElementById('soft-list');
         list.innerHTML = '';
         for (let name in products) {
             const p = products[name];
-            list.innerHTML += `<div class="card">
-                <div class="status-badge">${t.undetected}</div>
-                <i class="fa-${p.type} ${p.icon}"></i>
-                <h3>${name}</h3><p>${t[p.key]}</p>
-                <button class="buy-btn" onclick="openModal('${name}')">${t.buy}</button>
-            </div>`;
+            list.innerHTML += `
+                <div class="card">
+                    <div class="status-badge">${t.undetected}</div>
+                    <i class="fa-${p.type} ${p.icon}"></i>
+                    <h3>${name}</h3>
+                    <p>${t[p.key]}</p>
+                    <button class="buy-btn" onclick="openModal('${name}')">${t.buy}</button>
+                </div>`;
         }
     }
 
-    function createSnowflakes() {
-        const container = document.getElementById('header-snow');
-        if(!container) return;
+    // ===== FAQ =====
+    function renderFAQ() {
+        const container = document.getElementById('faq-container');
+        if (!container) return;
         container.innerHTML = '';
-        for (let i = 0; i < 40; i++) {
-            let flake = document.createElement('div');
-            flake.className = 'snowflake fa-solid fa-snowflake';
-            flake.style.left = (Math.random() * 95 + 2) + '%';
-            flake.style.animationDuration = (Math.random() * 4 + 3) + 's';
-            flake.style.animationDelay = (Math.random() * 3) + 's';
-            flake.style.opacity = Math.random() * 0.5 + 0.1;
-            flake.style.fontSize = (Math.random() * 12 + 6) + 'px';
-            container.appendChild(flake);
+        loc[cur].faq.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'faq-item';
+            div.innerHTML = `
+                <div class="faq-question">
+                    <span>${item.q}</span>
+                    <div class="faq-question-icon"><i class="fa-solid fa-chevron-down"></i></div>
+                </div>
+                <div class="faq-divider"></div>
+                <div class="faq-answer">${item.a}</div>
+            `;
+            div.addEventListener('click', () => div.classList.toggle('active'));
+            container.appendChild(div);
+        });
+    }
+
+    // ===== ЗВЁЗДОЧКИ (очень тихие) =====
+    function createSnowflakes() {
+        const container = document.getElementById('global-snow');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < 30; i++) {
+            const f = document.createElement('div');
+            f.className = 'snowflake fa-solid fa-star';
+            f.style.left             = (Math.random() * 98) + '%';
+            f.style.top              = (Math.random() * 100) + 'vh';
+            f.style.fontSize         = (Math.random() * 5 + 3) + 'px';
+            f.style.opacity          = (Math.random() * 0.04 + 0.02).toFixed(3);
+            f.style.animationDuration = (Math.random() * 20 + 18) + 's';
+            f.style.animationDelay   = '-' + (Math.random() * 20) + 's';
+            container.appendChild(f);
         }
     }
+
+    // ===== ОПЛАТА =====
+    function openGoldInput(type) {
+        goldMode = type;
+        document.getElementById('t-gold-modal-title').innerText =
+            type === 'buy' ? loc[cur].buyGold : loc[cur].sellGold;
+        document.getElementById('gold-input').value = '100';
+        document.getElementById('m-gold').style.display = 'flex';
+        calcGold();
+    }
+
+    function calcGold() {
+        const valStr = document.getElementById('gold-input').value;
+        const val    = parseInt(valStr) || 0;
+        const rate   = goldMode === 'buy' ? 0.65 : 0.74;
+        document.getElementById('t-total-gold-label').innerText =
+            goldMode === 'buy' ? loc[cur].total : loc[cur].receive;
+        const el = document.getElementById('gold-final-val');
+        if (valStr !== '' && val < 100) {
+            el.innerText = loc[cur].min;
+            el.style.fontSize = '20px';
+        } else {
+            el.innerText = `${Math.round(val * rate * loc[cur].r)} ${loc[cur].sym}`;
+            el.style.fontSize = '36px';
+        }
+    }
+
+    function confirmGold() {
+        const val = parseInt(document.getElementById('gold-input').value);
+        if (!val || val < 100) return alert(loc[cur].min);
+        if (goldMode === 'sell') {
+            const msg = `Продажа голды: ${val} Gold\nСумма к получению: ${document.getElementById('gold-final-val').innerText}`;
+            window.open(`https://t.me/godlike_supp?text=${encodeURIComponent(msg)}`, '_blank');
+            closeModals();
+            return;
+        }
+        order.base   = Math.round(val * 0.65 * loc[cur].r);
+        order.product = 'Gold Purchase';
+        order.period  = `${val} Gold`;
+        document.getElementById('m-gold').style.display = 'none';
+        document.getElementById('m-pay').style.display  = 'flex';
+        calc();
+    }
+
+    function openModal(name) {
+        order.product = name;
+        const opts = document.getElementById('m-options');
+        opts.innerHTML = '';
+        for (let p in products[name].plans) {
+            const pr = Math.round(products[name].plans[p] * loc[cur].r);
+            opts.innerHTML += `
+                <div class="opt" onclick="setPlan('${p}', ${pr})">
+                    <span>${p}</span> <b>${pr} ${loc[cur].sym}</b>
+                </div>`;
+        }
+        document.getElementById('m-price').style.display = 'flex';
+    }
+
+    function setPlan(p, pr) {
+        order.period = p;
+        order.base   = pr;
+        document.getElementById('m-price').style.display = 'none';
+        document.getElementById('m-pay').style.display   = 'flex';
+        calc();
+    }
+
+    function calc() {
+        let amount = order.base;
+        if (document.getElementById('promo-in').value.toUpperCase() === 'GODLIKE')
+            amount = Math.round(amount * 0.9);
+        document.getElementById('final-val').innerText = `${amount} ${loc[cur].sym}`;
+        // Эквивалент в USDT
+        const priceRub = Math.round(amount / loc[cur].r);
+        document.getElementById('usdt-equiv').innerText = (priceRub / USDT_RATE_RUB).toFixed(2);
+    }
+
+    function finish(method) {
+        if (method === 'USDT') {
+            let amount = order.base;
+            if (document.getElementById('promo-in').value.toUpperCase() === 'GODLIKE')
+                amount = Math.round(amount * 0.9);
+            const priceRub = Math.round(amount / loc[cur].r);
+            tg.sendData(JSON.stringify({
+                action: 'pay_crypto',
+                item: order.product + (order.period ? ` (${order.period})` : ''),
+                price_rub: priceRub
+            }));
+        } else {
+            const msg = `Оплата картой: ${order.product} ${order.period} — ${document.getElementById('final-val').innerText}`;
+            window.open(`https://t.me/godlike_supp?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+        closeModals();
+    }
+
+    // ===== СТАТИСТИКА (анимация) =====
+    function animateValue(id, start, end, duration) {
+        if (start === end) return;
+        const el = document.getElementById(id);
+        let t0 = null;
+        const step = ts => {
+            if (!t0) t0 = ts;
+            const p = Math.min((ts - t0) / duration, 1);
+            el.innerHTML = Math.floor(p * (end - start) + start).toLocaleString();
+            if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    }
+
+    function updateOnline() {
+        const now = new Date();
+        const msk = new Date(now.getTime() + (now.getTimezoneOffset() + 180) * 60000);
+        const h   = msk.getHours();
+        let target;
+        if      (h >= 2  && h < 9)  target = 2  + Math.floor(Math.random() * 4);
+        else if (h >= 9  && h < 18) target = 12 + Math.floor(Math.random() * 6);
+        else                         target = 8  + Math.floor(Math.random() * 5);
+        animateValue('c-online', currentOnline, target, 1000);
+        currentOnline = target;
+        setTimeout(updateOnline, Math.floor(Math.random() * 7000) + 8000);
+    }
+
+    setInterval(() => {
+        const fresh = getAutoStats();
+        if (fresh.orders  !== ordCnt) { animateValue('c-orders',  ordCnt,  fresh.orders,  800); ordCnt  = fresh.orders;  }
+        if (fresh.clients !== cliCnt) { animateValue('c-clients', cliCnt, fresh.clients, 800); cliCnt = fresh.clients; }
+    }, 30000);
+
+    // ===== ГЕНЕРАЦИЯ НИКОВ =====
+    const prefixes = ["Zxc","Dark","Pro","Mega","Super","Ghost","Dead","Toxic","Lil","Big","K1ll","Noob","God","Shadow","Cyber","Crazy","Ice","Fire","Blood","Soul","xXx","Nagibator","Chiter","Hacker","Anime","Demon","Neo","Slayer","Void","Rampage","Lucky","Night","King","Queen","Lord","Saint","Wicked","Cursed","Phantom","Reaper","Hunter","Ninja","Panda","Wolf","Dragon","Fenix","Eagle","Tiger","Lion","Bear","Raven","Snake","Spider","Skull","Crow","Viper","Rage","Fury","Blaze","Storm","Thunder","Lightning","Flash","Inferno","Frost","Crystal","Obsidian","Onyx","Ruby","Emerald","Sapphire","Diamond","Gold","Silver","Bronze","Steel","Iron","Titan","Omega","Alpha","Beta","Gamma","Delta","Sigma","Savage","Elite","Prime","Ultra","Hyper","Turbo","Rapid","Swift","Quick","Fast","Speed","Blitz","Crash","Smash","Boom","Bang"];
+    const roots    = ["ghoul","killer","sniper","dimon","sanya","vlad","chel","player","gamer","ninja","stalker","demon","angel","beast","wolf","dragon","boy","girl","master","king","lox","tascher","kent","brat","mashina","chelik","tip","skill","legenda","warrior","knight","mage","wizard","hunter","ranger","assassin","rogue","shaman","druid","paladin","necromancer","warlock","archer","swordsman","axe","blade","dagger","bow","shield","hammer","fist","kick","slash","shoot","kill","destroy","dominate","conquer","win","glory","fame","honor","legend","myth","epic","cat","dog","fox","owl","hawk","raven","crow","eagle","falcon","phoenix","griffin","hydra","troll","giant","dwarf","elf","orc","goblin","vampire","werewolf","zombie","skeleton","ghost","spirit","phantom","wraith","demon","devil","angel","robot","droid","cyborg","mutant","clone","spec","agent","commando","soldier","marine","trooper","guardian","champion","hero"];
+    const suffixes = ["228","1337","69","88","777","666","123","321","111","999","000","007","xXx","pro","noob","top","god","kill","dead","live","win","fire","ice","dark","light","shadow","phantom","reaper","hunter","slayer","soul","blade","fang","claw","skull","mask","bot","ai","pc","ps","mobile","android","ios","code","dev","hack","mod","cheat","exploit","glitch","bug","patch"];
+    const specialChars       = ["_","-",".","·","•","×","",""];
+    const cyrillicPrefixes   = ["Самый","Крутой","Злой","Дикий","Золотой","Черный","Белый","Красный","Синий","Огненный","Ледяной","Быстрый","Смертельный","Безумный","Хитрый","Великий","Могучий","Святой","Темный","Светлый"];
+    const cyrillicRoots      = ["убийца","воин","маг","лучник","танк","хил","дд","топ","лох","красавчик","бог","демон","ангел","зверь","волк","медведь","лис","орел","сокол","дракон"];
 
     function getUniqueName() {
-        const prefixes = ["Zxc", "Dark", "Pro", "Mega", "Super", "Ghost", "Dead", "Toxic", "Lil", "Big", "K1ll", "Noob", "God", "Shadow", "Cyber", "Crazy", "Ice", "Fire", "Blood", "Soul", "xXx", "Nagibator", "Chiter", "Hacker", "Anime", "Demon", "Neo", "Slayer", "Void", "Rampage", "Lucky"];
-        const roots = ["ghoul", "killer", "sniper", "dimon", "sanya", "vlad", "чел", "player", "gamer", "ninja", "stalker", "demon", "angel", "beast", "wolf", "dragon", "boy", "girl", "master", "king", "лох", "тащер", "кентуха", "брат", "машина", "челик", "тип", "скилл", "легенда"];
-        let name;
-        let attempts = 0;
+        let name, attempts = 0;
+        const useCyr = Math.random() < 0.3;
         do {
-            const p = prefixes[Math.floor(Math.random() * prefixes.length)];
-            const r = roots[Math.floor(Math.random() * roots.length)];
-            const num = Math.floor(Math.random() * 9999);
-            const formats = [
-                `${p}_${r}`, `${p}${r}${num}`, `${r}${num}`, `${p}${num}`,
-                `${r}_${num}`, `${p.toLowerCase()}${r.toLowerCase()}`,
-                `${r.toUpperCase()}_${num}`, `${p}_${r}_${num}`, `${p}.${r}`
-            ];
-            name = formats[Math.floor(Math.random() * formats.length)];
+            const sep = specialChars[Math.floor(Math.random() * specialChars.length)];
+            const suf = Math.random() < 0.6 ? suffixes[Math.floor(Math.random() * suffixes.length)] : '';
+            if (useCyr) {
+                const pre  = cyrillicPrefixes[Math.floor(Math.random() * cyrillicPrefixes.length)];
+                const root = cyrillicRoots[Math.floor(Math.random() * cyrillicRoots.length)];
+                name = pre + sep + root + (suf ? sep + suf : '');
+            } else {
+                const pre  = prefixes[Math.floor(Math.random() * prefixes.length)];
+                const root = roots[Math.floor(Math.random() * roots.length)];
+                const t    = Math.floor(Math.random() * 5);
+                if      (t === 0) name = pre + sep + root + (suf ? sep + suf : '');
+                else if (t === 1) name = root + sep + pre + (suf ? sep + suf : '');
+                else if (t === 2) name = pre + root + (suf || '');
+                else if (t === 3) name = root + (suf ? sep + suf : '') + sep + pre;
+                else              name = pre + sep + suf + sep + root;
+            }
+            if (Math.random() < 0.3) name += Math.floor(Math.random() * 9999);
+            if (Math.random() < 0.1) name = '_' + name;
+            if (Math.random() < 0.1) name = name + '_';
+            if (name.length > 20)    name = name.substring(0, 20);
             attempts++;
-            if(attempts > 200) name = name + "_" + Math.floor(Math.random() * 99999);
-        } while(usedNames.has(name));
+            if (attempts > 500) name = name + '_' + Math.floor(Math.random() * 999999);
+        } while (usedNames.has(name));
         usedNames.add(name);
         return name;
     }
 
+    // ===== ГЕНЕРАЦИЯ ОТЗЫВОВ =====
     function generateInitialReviews() {
         usedNames.clear();
         reviewPool = [];
-        let rDate = new Date();
         const t = loc[cur];
-        for(let i=0; i<300; i++) {
-            rDate.setDate(rDate.getDate() - (i % 3 === 0 ? 0 : 1));
-            let h = Math.floor(Math.random() * 24);
-            let m = Math.floor(Math.random() * 60);
-
-            let phrase = t.phrases[Math.floor(Math.random() * t.phrases.length)];
-
-            if (Math.random() > 0.8) phrase += ")";
-            if (Math.random() > 0.9) phrase += "!!";
-
-            reviewPool.push({
-                name: getUniqueName(),
-                text: phrase,
-                stars: Math.random() > 0.07 ? 5 : 4,
-                date: `${rDate.toLocaleDateString()} ${h}:${(m<10?'0':'')+m}`
-            });
+        for (let i = 0; i < 500; i++) {
+            const date = new Date();
+            date.setDate(date.getDate() - Math.floor(Math.random() * 90));
+            const h = Math.floor(Math.random() * 24);
+            const m = Math.floor(Math.random() * 60);
+            const dateStr = `${date.toLocaleDateString()} ${h}:${m < 10 ? '0' : ''}${m}`;
+            let phrase;
+            if (Math.random() < 0.7) {
+                phrase = t.phrases[Math.floor(Math.random() * t.phrases.length)];
+                if (Math.random() < 0.3) {
+                    const emojis = ["🔥","💯","👌","😎","👍","🙏","💪","⚡","✅","🎯"];
+                    phrase += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
+                }
+            } else {
+                const p1 = t.phrases[Math.floor(Math.random() * t.phrases.length)];
+                const p2 = t.phrases[Math.floor(Math.random() * t.phrases.length)];
+                phrase = p1 + ', ' + p2;
+            }
+            const rnd   = Math.random();
+            const stars = rnd < 0.8 ? 5 : rnd < 0.95 ? 4 : 3;
+            reviewPool.push({ name: getUniqueName(), text: phrase, stars, date: dateStr });
         }
         reviewPool.sort(() => Math.random() - 0.5);
     }
@@ -505,10 +928,13 @@
         container.innerHTML = '';
         reviewPool.slice(0, visibleReviews).forEach(r => {
             let starsHtml = '';
-            for(let i=0; i<r.stars; i++) starsHtml += '<i class="fa-solid fa-star"></i>';
+            for (let i = 0; i < r.stars; i++) starsHtml += '<i class="fa-solid fa-star"></i>';
             container.innerHTML += `
                 <div class="rev-item">
-                    <div class="rev-header"><span class="rev-name">${r.name}</span><span class="rev-date">${r.date}</span></div>
+                    <div class="rev-header">
+                        <span class="rev-name">${r.name}</span>
+                        <span class="rev-date">${r.date}</span>
+                    </div>
                     <div class="stars">${starsHtml}</div>
                     <p style="font-size:14px; color:#aaa; line-height:1.4;">${r.text}</p>
                 </div>`;
@@ -518,107 +944,16 @@
     function showMore() {
         visibleReviews += 15;
         renderReviews();
-        if(visibleReviews >= reviewPool.length) document.getElementById('btn-more').style.display = 'none';
+        if (visibleReviews >= reviewPool.length)
+            document.getElementById('btn-more').style.display = 'none';
     }
 
-    function openGoldInput(type) {
-        goldMode = type;
-        document.getElementById('t-gold-modal-title').innerText = type === 'buy' ? loc[cur].buyGold : loc[cur].sellGold;
-        document.getElementById('gold-input').value = '100';
-        document.getElementById('m-gold').style.display = 'flex';
-        calcGold();
-    }
-
-    function calcGold() {
-        const valStr = document.getElementById('gold-input').value;
-        const val = parseInt(valStr) || 0;
-        const rate = goldMode === 'buy' ? 0.65 : 0.74;
-        document.getElementById('t-total-gold-label').innerText = goldMode === 'buy' ? loc[cur].total : loc[cur].receive;
-        const finalValEl = document.getElementById('gold-final-val');
-        if (valStr !== '' && val < 100) {
-            finalValEl.innerText = loc[cur].min;
-            finalValEl.style.fontSize = "20px";
-        } else {
-            finalValEl.innerText = `${Math.round(val * rate * loc[cur].r)} ${loc[cur].sym}`;
-            finalValEl.style.fontSize = "36px";
-        }
-    }
-
-    function confirmGold() {
-        const val = parseInt(document.getElementById('gold-input').value);
-        if(!val || val < 100) return alert(loc[cur].min);
-        if(goldMode === 'sell') {
-            const msg = `Продажа голды: ${val} Gold\nСумма к получению: ${document.getElementById('gold-final-val').innerText}`;
-            window.open(`https://t.me/godlike_supp?text=${encodeURIComponent(msg)}`, '_blank');
-            closeModals();
-            return;
-        }
-        order.base = Math.round(val * 0.65 * loc[cur].r);
-        order.product = 'Gold Purchase';
-        order.period = `${val} Gold`;
-        document.getElementById('m-gold').style.display = 'none';
-        document.getElementById('m-pay').style.display = 'flex';
-        calc();
-    }
-
-    function openModal(name) {
-        order.product = name;
-        const opts = document.getElementById('m-options');
-        opts.innerHTML = '';
-        for (let p in products[name].plans) {
-            let pr = Math.round(products[name].plans[p] * loc[cur].r);
-            opts.innerHTML += `<div class="opt" onclick="setPlan('${p}', ${pr})"><span>${p}</span> <b>${pr} ${loc[cur].sym}</b></div>`;
-        }
-        document.getElementById('m-price').style.display = 'flex';
-    }
-
-    function setPlan(p, pr) { order.period = p; order.base = pr; document.getElementById('m-price').style.display = 'none'; document.getElementById('m-pay').style.display = 'flex'; calc(); }
-
-    function calc() {
-        let t = order.base;
-        if(document.getElementById('promo-in').value.toUpperCase() === 'GODLIKE') t *= 0.9;
-        document.getElementById('final-val').innerText = `${Math.round(t)} ${loc[cur].sym}`;
-    }
-
-    function animateValue(id, start, end, duration) {
-        if (start === end) return;
-        const obj = document.getElementById(id);
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
-            if (progress < 1) window.requestAnimationFrame(step);
-        };
-        window.requestAnimationFrame(step);
-    }
-
-    function updateOnline() {
-        const mskOffset = 3;
-        const now = new Date();
-        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-        const mskDate = new Date(utc + (3600000 * mskOffset));
-        const hour = mskDate.getHours();
-        let targetOnline;
-        if (hour >= 2 && hour < 9) targetOnline = 2 + Math.floor(Math.random() * 4);
-        else if (hour >= 9 && hour < 18) targetOnline = 12 + Math.floor(Math.random() * 6);
-        else targetOnline = 8 + Math.floor(Math.random() * 5);
-        animateValue('c-online', currentOnline, targetOnline, 1000);
-        currentOnline = targetOnline;
-        setTimeout(updateOnline, Math.floor(Math.random() * 7000) + 8000);
-    }
-
-    setInterval(() => {
-        let oldOrd = ordCnt;
-        let oldCli = cliCnt;
-        let freshStats = getAutoStats();
-        ordCnt = freshStats.orders;
-        cliCnt = freshStats.clients;
-        if(oldOrd !== ordCnt) animateValue('c-orders', oldOrd, ordCnt, 800);
-        if(oldCli !== cliCnt) animateValue('c-clients', oldCli, cliCnt, 800);
-    }, 30000);
-
-    window.onload = () => { setLocale('ru'); updateOnline(); };
+    // ===== ИНИТ =====
+    window.onload = () => {
+        setLocale('ru');
+        updateOnline();
+        createSnowflakes();
+    };
 </script>
 </body>
 </html>
