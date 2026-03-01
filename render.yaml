@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: godlike-shop-bot
+    runtime: python
+    repo: https://github.com/istogen/Godlike
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false  # будет запрошено при первом деплое
+      - key: CRYPTO_TOKEN
+        sync: false
