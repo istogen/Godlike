@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -27,230 +26,227 @@
         }
         @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-```
-    /* ── STARS BG ── */
-    #global-snow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-    .snowflake{position:absolute;color:#ff4d00;animation:fall linear infinite;}
-    @keyframes fall{0%{transform:translateY(0) rotate(0deg);opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
+        /* ── STARS BG ── */
+        #global-snow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+        .snowflake{position:absolute;color:#ff4d00;animation:fall linear infinite;}
+        @keyframes fall{0%{transform:translateY(0) rotate(0deg);opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
 
-    /* ── MESH GRADIENT ── */
-    .mesh{position:fixed;inset:0;pointer-events:none;z-index:0;
-        background:radial-gradient(ellipse 60% 40% at 20% 10%,rgba(255,77,0,0.04) 0%,transparent 70%),
-                   radial-gradient(ellipse 50% 60% at 80% 80%,rgba(204,61,0,0.04) 0%,transparent 70%);}
+        /* ── MESH GRADIENT ── */
+        .mesh{position:fixed;inset:0;pointer-events:none;z-index:0;
+            background:radial-gradient(ellipse 60% 40% at 20% 10%,rgba(255,77,0,0.04) 0%,transparent 70%),
+                       radial-gradient(ellipse 50% 60% at 80% 80%,rgba(204,61,0,0.04) 0%,transparent 70%);}
 
-    .container{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1;}
+        .container{max-width:1200px;margin:0 auto;padding:20px;position:relative;z-index:1;}
 
-    /* ── INTRO ── */
-    #intro-overlay{
-        position:fixed;inset:0;background:#000;z-index:9999;
-        display:flex;align-items:center;justify-content:center;
-        flex-direction:column;text-align:center;padding:30px;
-        transition:opacity .8s cubic-bezier(.4,0,.2,1);
-    }
-    .intro-content{max-width:500px;animation:slideUp 1s ease;}
-    .intro-logo{font-family:'Orbitron',sans-serif;font-size:38px;background:var(--orange-flow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;letter-spacing:2px;}
-    .intro-bio{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:28px;}
-    .intro-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;}
-    .intro-badge{background:rgba(255,77,0,.08);border:1px solid rgba(255,77,0,.2);border-radius:50px;padding:6px 14px;font-size:10px;color:#ff8c00;font-weight:800;letter-spacing:.5px;}
+        /* ── INTRO ── */
+        #intro-overlay{
+            position:fixed;inset:0;background:#000;z-index:9999;
+            display:flex;align-items:center;justify-content:center;
+            flex-direction:column;text-align:center;padding:30px;
+            transition:opacity .8s cubic-bezier(.4,0,.2,1);
+        }
+        .intro-content{max-width:500px;animation:slideUp 1s ease;}
+        .intro-logo{font-family:'Orbitron',sans-serif;font-size:38px;background:var(--orange-flow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;letter-spacing:2px;}
+        .intro-bio{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:28px;}
+        .intro-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;}
+        .intro-badge{background:rgba(255,77,0,.08);border:1px solid rgba(255,77,0,.2);border-radius:50px;padding:6px 14px;font-size:10px;color:#ff8c00;font-weight:800;letter-spacing:.5px;}
 
-    /* ── HEADER ── */
-    header{text-align:center;padding:55px 0 25px;position:relative;z-index:1;}
-    .logo{font-family:'Orbitron',sans-serif;font-size:clamp(26px,8vw,52px);font-weight:900;letter-spacing:2px;text-transform:uppercase;background:var(--orange-flow);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:flow 3s linear infinite;filter:drop-shadow(0 0 12px rgba(255,77,0,0.25));}
-    @keyframes flow{0%{background-position:0% center}100%{background-position:200% center}}
-    .tagline{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-top:10px;font-weight:700;}
+        /* ── HEADER ── */
+        header{text-align:center;padding:55px 0 25px;position:relative;z-index:1;}
+        .logo{font-family:'Orbitron',sans-serif;font-size:clamp(26px,8vw,52px);font-weight:900;letter-spacing:2px;text-transform:uppercase;background:var(--orange-flow);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:flow 3s linear infinite;filter:drop-shadow(0 0 12px rgba(255,77,0,0.25));}
+        @keyframes flow{0%{background-position:0% center}100%{background-position:200% center}}
+        .tagline{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-top:10px;font-weight:700;}
 
-    /* ── USER CARD (TG auth) ── */
-    #user-card{
-        display:none;
-        background:var(--card);border:1px solid var(--border);border-radius:28px;
-        padding:18px 22px;margin-bottom:20px;
-        backdrop-filter:blur(20px);
-        flex-direction:row;align-items:center;gap:16px;
-        animation:slideUp .5s ease;
-    }
-    .user-avatar{
-        width:48px;height:48px;border-radius:50%;
-        background:linear-gradient(135deg,#cc3d00,#ff4d00);
-        display:flex;align-items:center;justify-content:center;
-        font-size:20px;font-weight:900;color:#fff;flex-shrink:0;
-        border:2px solid rgba(255,77,0,.3);
-    }
-    .user-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
-    .user-info{flex:1;min-width:0;}
-    .user-name{font-weight:900;font-size:15px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .user-sub{font-size:11px;color:var(--dim);margin-top:2px;}
-    .user-badge{
-        background:rgba(255,77,0,.1);border:1px solid rgba(255,77,0,.2);
-        border-radius:20px;padding:5px 12px;font-size:10px;
-        color:#ff8c00;font-weight:800;white-space:nowrap;
-    }
+        /* ── USER CARD (TG auth) ── */
+        #user-card{
+            display:none;
+            background:var(--card);border:1px solid var(--border);border-radius:28px;
+            padding:18px 22px;margin-bottom:20px;
+            backdrop-filter:blur(20px);
+            flex-direction:row;align-items:center;gap:16px;
+            animation:slideUp .5s ease;
+        }
+        .user-avatar{
+            width:48px;height:48px;border-radius:50%;
+            background:linear-gradient(135deg,#cc3d00,#ff4d00);
+            display:flex;align-items:center;justify-content:center;
+            font-size:20px;font-weight:900;color:#fff;flex-shrink:0;
+            border:2px solid rgba(255,77,0,.3);
+        }
+        .user-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+        .user-info{flex:1;min-width:0;}
+        .user-name{font-weight:900;font-size:15px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .user-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+        .user-badge{
+            background:rgba(255,77,0,.1);border:1px solid rgba(255,77,0,.2);
+            border-radius:20px;padding:5px 12px;font-size:10px;
+            color:#ff8c00;font-weight:800;white-space:nowrap;
+        }
 
-    /* ── ВАЛЮТА ── */
-    .selectors{display:flex;gap:10px;justify-content:center;background:var(--glass);padding:6px;border-radius:18px;width:fit-content;margin:28px auto;border:1px solid var(--border);backdrop-filter:blur(10px);}
-    .sel-btn{background:transparent;border:none;color:var(--dim);padding:9px 22px;border-radius:12px;font-size:12px;font-weight:800;cursor:pointer;transition:.35s;}
-    .sel-btn.active{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(255,77,0,.3);}
+        /* ── ВАЛЮТА ── */
+        .selectors{display:flex;gap:10px;justify-content:center;background:var(--glass);padding:6px;border-radius:18px;width:fit-content;margin:28px auto;border:1px solid var(--border);backdrop-filter:blur(10px);}
+        .sel-btn{background:transparent;border:none;color:var(--dim);padding:9px 22px;border-radius:12px;font-size:12px;font-weight:800;cursor:pointer;transition:.35s;}
+        .sel-btn.active{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(255,77,0,.3);}
 
-    /* ── STATS ── */
-    .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:40px;}
-    .stat-box{background:var(--card);padding:18px 8px;border-radius:22px;text-align:center;border:1px solid var(--border);backdrop-filter:blur(20px);transition:.3s;}
-    .stat-box:hover{border-color:var(--border-h);transform:translateY(-3px);}
-    .stat-box span{font-size:8px;color:var(--dim);text-transform:uppercase;font-weight:800;display:block;margin-bottom:6px;letter-spacing:1px;}
-    .stat-box b{font-size:clamp(15px,4vw,22px);font-weight:900;display:block;color:#fff;}
-    .stat-box.online b{color:#00ff64;text-shadow:0 0 12px rgba(0,255,100,.7);animation:pulse 2s ease-in-out infinite;}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
+        /* ── STATS ── */
+        .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:40px;}
+        .stat-box{background:var(--card);padding:18px 8px;border-radius:22px;text-align:center;border:1px solid var(--border);backdrop-filter:blur(20px);transition:.3s;}
+        .stat-box:hover{border-color:var(--border-h);transform:translateY(-3px);}
+        .stat-box span{font-size:8px;color:var(--dim);text-transform:uppercase;font-weight:800;display:block;margin-bottom:6px;letter-spacing:1px;}
+        .stat-box b{font-size:clamp(15px,4vw,22px);font-weight:900;display:block;color:#fff;}
+        .stat-box.online b{color:#00ff64;text-shadow:0 0 12px rgba(0,255,100,.7);animation:pulse 2s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.75}}
 
-    /* ── SECTION LABEL ── */
-    .section-label{font-size:12px;font-weight:900;color:#fff;text-transform:uppercase;margin:55px 0 28px;letter-spacing:3px;display:flex;align-items:center;gap:16px;}
-    .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
-    .section-label i{color:var(--accent-s);font-size:14px;}
+        /* ── SECTION LABEL ── */
+        .section-label{font-size:12px;font-weight:900;color:#fff;text-transform:uppercase;margin:55px 0 28px;letter-spacing:3px;display:flex;align-items:center;gap:16px;}
+        .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+        .section-label i{color:var(--accent-s);font-size:14px;}
 
-    /* ── CARDS ── */
-    #soft-list,.gold-grid{display:grid;grid-template-columns:1fr;gap:22px;}
-    @media(min-width:768px){#soft-list,.gold-grid{grid-template-columns:1fr 1fr;}}
-    @media(min-width:1100px){#soft-list{grid-template-columns:1fr 1fr 1fr;}}
+        /* ── CARDS ── */
+        #soft-list,.gold-grid{display:grid;grid-template-columns:1fr;gap:22px;}
+        @media(min-width:768px){#soft-list,.gold-grid{grid-template-columns:1fr 1fr;}}
+        @media(min-width:1100px){#soft-list{grid-template-columns:1fr 1fr 1fr;}}
 
-    .card{
-        background:var(--card);border:1px solid var(--border);
-        border-radius:32px;padding:38px;position:relative;
-        transition:.45s cubic-bezier(.2,1,.3,1);backdrop-filter:blur(15px);
-        overflow:hidden;text-align:left;
-    }
-    .card.ct{text-align:center;}
-    .card:hover{border-color:var(--accent-s);transform:translateY(-8px);box-shadow:0 24px 48px rgba(0,0,0,.55);}
-    .card:hover .card-glow{opacity:1;}
-    .card-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% -10%,rgba(255,77,0,.09) 0%,transparent 65%);opacity:0;transition:opacity .5s;}
-    /* диагональная линия-акцент */
-    .card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at 100% 0%,rgba(255,77,0,.07),transparent 70%);pointer-events:none;}
+        .card{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:32px;padding:38px;position:relative;
+            transition:.45s cubic-bezier(.2,1,.3,1);backdrop-filter:blur(15px);
+            overflow:hidden;text-align:left;
+        }
+        .card.ct{text-align:center;}
+        .card:hover{border-color:var(--accent-s);transform:translateY(-8px);box-shadow:0 24px 48px rgba(0,0,0,.55);}
+        .card:hover .card-glow{opacity:1;}
+        .card-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% -10%,rgba(255,77,0,.09) 0%,transparent 65%);opacity:0;transition:opacity .5s;}
+        /* диагональная линия-акцент */
+        .card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at 100% 0%,rgba(255,77,0,.07),transparent 70%);pointer-events:none;}
 
-    .status-badge{position:absolute;top:22px;right:22px;background:rgba(0,255,100,.08);color:#00ff64;padding:5px 12px;border-radius:50px;font-size:9px;font-weight:900;border:1px solid rgba(0,255,100,.18);z-index:1;letter-spacing:.5px;}
-    .card i,.card h3,.card p,.card .buy-btn{position:relative;z-index:2;}
-    .card i{font-size:42px;color:var(--accent-s);margin-bottom:22px;display:block;filter:drop-shadow(0 0 14px rgba(255,77,0,.35));transition:.3s;}
-    .card:hover i{filter:drop-shadow(0 0 22px rgba(255,77,0,.6));transform:scale(1.08);}
-    .card.ct i{margin-left:auto;margin-right:auto;}
-    .card h3{font-size:22px;margin-bottom:12px;font-weight:900;}
-    .card p{font-size:13px;color:var(--dim);margin-bottom:28px;line-height:1.65;min-height:75px;}
-    .card.ct p{min-height:auto;}
+        .status-badge{position:absolute;top:22px;right:22px;background:rgba(0,255,100,.08);color:#00ff64;padding:5px 12px;border-radius:50px;font-size:9px;font-weight:900;border:1px solid rgba(0,255,100,.18);z-index:1;letter-spacing:.5px;}
+        .card i,.card h3,.card p,.card .buy-btn{position:relative;z-index:2;}
+        .card i{font-size:42px;color:var(--accent-s);margin-bottom:22px;display:block;filter:drop-shadow(0 0 14px rgba(255,77,0,.35));transition:.3s;}
+        .card:hover i{filter:drop-shadow(0 0 22px rgba(255,77,0,.6));transform:scale(1.08);}
+        .card.ct i{margin-left:auto;margin-right:auto;}
+        .card h3{font-size:22px;margin-bottom:12px;font-weight:900;}
+        .card p{font-size:13px;color:var(--dim);margin-bottom:28px;line-height:1.65;min-height:75px;}
+        .card.ct p{min-height:auto;}
 
-    /* ── FAQ ── */
-    .faq-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:40px;}
-    .faq-item{background:var(--card);border:1px solid var(--border);border-radius:30px;padding:26px 32px;backdrop-filter:blur(15px);transition:.4s cubic-bezier(.2,1,.3,1);cursor:pointer;overflow:hidden;position:relative;}
-    .faq-item::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent);border-radius:4px 0 0 4px;opacity:0;transition:opacity .3s;}
-    .faq-item:hover{border-color:var(--border-h);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.4);}
-    .faq-item.active{border-color:rgba(255,77,0,.45);box-shadow:0 12px 35px rgba(255,77,0,.07);}
-    .faq-item.active::before{opacity:1;}
-    .faq-q{font-weight:900;font-size:14px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;}
-    .faq-icon{width:36px;height:36px;min-width:36px;background:rgba(255,77,0,.08);border:1px solid rgba(255,77,0,.18);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent-s);font-size:12px;transition:.3s;}
-    .faq-item.active .faq-icon{background:rgba(255,77,0,.18);transform:rotate(180deg);}
-    .faq-divider{display:none;width:100%;height:1px;background:var(--border);margin-top:16px;}
-    .faq-item.active .faq-divider{display:block;}
-    .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease-out,opacity .3s,margin-top .3s;color:var(--dim);font-size:13px;line-height:1.7;opacity:0;}
-    .faq-item.active .faq-a{max-height:300px;margin-top:16px;opacity:1;}
+        /* ── FAQ ── */
+        .faq-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:40px;}
+        .faq-item{background:var(--card);border:1px solid var(--border);border-radius:30px;padding:26px 32px;backdrop-filter:blur(15px);transition:.4s cubic-bezier(.2,1,.3,1);cursor:pointer;overflow:hidden;position:relative;}
+        .faq-item::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent);border-radius:4px 0 0 4px;opacity:0;transition:opacity .3s;}
+        .faq-item:hover{border-color:var(--border-h);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.4);}
+        .faq-item.active{border-color:rgba(255,77,0,.45);box-shadow:0 12px 35px rgba(255,77,0,.07);}
+        .faq-item.active::before{opacity:1;}
+        .faq-q{font-weight:900;font-size:14px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+        .faq-icon{width:36px;height:36px;min-width:36px;background:rgba(255,77,0,.08);border:1px solid rgba(255,77,0,.18);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent-s);font-size:12px;transition:.3s;}
+        .faq-item.active .faq-icon{background:rgba(255,77,0,.18);transform:rotate(180deg);}
+        .faq-divider{display:none;width:100%;height:1px;background:var(--border);margin-top:16px;}
+        .faq-item.active .faq-divider{display:block;}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease-out,opacity .3s,margin-top .3s;color:var(--dim);font-size:13px;line-height:1.7;opacity:0;}
+        .faq-item.active .faq-a{max-height:300px;margin-top:16px;opacity:1;}
 
-    /* ── AI CHAT ── */
-    .chat-wrap{
-        background:var(--card);border:1px solid var(--border);
-        border-radius:32px;overflow:hidden;backdrop-filter:blur(15px);
-        margin-bottom:40px;
-    }
-    .chat-header{
-        background:rgba(255,77,0,.06);border-bottom:1px solid var(--border);
-        padding:18px 24px;display:flex;align-items:center;gap:14px;
-    }
-    .chat-ai-avatar{
-        width:40px;height:40px;border-radius:50%;
-        background:linear-gradient(135deg,#cc3d00,#ff6a00);
-        display:flex;align-items:center;justify-content:center;
-        font-size:18px;flex-shrink:0;border:2px solid rgba(255,77,0,.25);
-    }
-    .chat-ai-info{flex:1;}
-    .chat-ai-name{font-weight:900;font-size:14px;color:#fff;}
-    .chat-ai-status{font-size:11px;color:#00ff64;font-weight:700;display:flex;align-items:center;gap:5px;margin-top:2px;}
-    .chat-ai-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#00ff64;display:inline-block;animation:pulse 2s infinite;}
-    .chat-ai-hint{font-size:10px;color:var(--dim);}
+        /* ── AI CHAT ── */
+        .chat-wrap{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:32px;overflow:hidden;backdrop-filter:blur(15px);
+            margin-bottom:40px;
+        }
+        .chat-header{
+            background:rgba(255,77,0,.06);border-bottom:1px solid var(--border);
+            padding:18px 24px;display:flex;align-items:center;gap:14px;
+        }
+        .chat-ai-avatar{
+            width:40px;height:40px;border-radius:50%;
+            background:linear-gradient(135deg,#cc3d00,#ff6a00);
+            display:flex;align-items:center;justify-content:center;
+            font-size:18px;flex-shrink:0;border:2px solid rgba(255,77,0,.25);
+        }
+        .chat-ai-info{flex:1;}
+        .chat-ai-name{font-weight:900;font-size:14px;color:#fff;}
+        .chat-ai-status{font-size:11px;color:#00ff64;font-weight:700;display:flex;align-items:center;gap:5px;margin-top:2px;}
+        .chat-ai-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#00ff64;display:inline-block;animation:pulse 2s infinite;}
+        .chat-ai-hint{font-size:10px;color:var(--dim);}
 
-    #chat-messages{
-        height:320px;overflow-y:auto;padding:20px;
-        display:flex;flex-direction:column;gap:12px;
-        scrollbar-width:thin;scrollbar-color:rgba(255,77,0,.2) transparent;
-    }
-    #chat-messages::-webkit-scrollbar{width:4px;}
-    #chat-messages::-webkit-scrollbar-thumb{background:rgba(255,77,0,.2);border-radius:4px;}
+        #chat-messages{
+            height:320px;overflow-y:auto;padding:20px;
+            display:flex;flex-direction:column;gap:12px;
+            scrollbar-width:thin;scrollbar-color:rgba(255,77,0,.2) transparent;
+        }
+        #chat-messages::-webkit-scrollbar{width:4px;}
+        #chat-messages::-webkit-scrollbar-thumb{background:rgba(255,77,0,.2);border-radius:4px;}
 
-    .msg{display:flex;gap:10px;animation:slideUp .3s ease;}
-    .msg.user{flex-direction:row-reverse;}
-    .msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px;}
-    .msg.ai .msg-avatar{background:linear-gradient(135deg,#cc3d00,#ff6a00);}
-    .msg.user .msg-avatar{background:linear-gradient(135deg,#1a1a1a,#2a2a2a);border:1px solid rgba(255,77,0,.2);}
-    .msg-bubble{max-width:78%;padding:12px 16px;border-radius:18px;font-size:13px;line-height:1.55;}
-    .msg.ai .msg-bubble{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:4px 18px 18px 18px;color:#ddd;}
-    .msg.user .msg-bubble{background:linear-gradient(135deg,#cc3d00,#ff4d00);color:#fff;border-radius:18px 4px 18px 18px;}
+        .msg{display:flex;gap:10px;animation:slideUp .3s ease;}
+        .msg.user{flex-direction:row-reverse;}
+        .msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px;}
+        .msg.ai .msg-avatar{background:linear-gradient(135deg,#cc3d00,#ff6a00);}
+        .msg.user .msg-avatar{background:linear-gradient(135deg,#1a1a1a,#2a2a2a);border:1px solid rgba(255,77,0,.2);}
+        .msg-bubble{max-width:78%;padding:12px 16px;border-radius:18px;font-size:13px;line-height:1.55;}
+        .msg.ai .msg-bubble{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:4px 18px 18px 18px;color:#ddd;}
+        .msg.user .msg-bubble{background:linear-gradient(135deg,#cc3d00,#ff4d00);color:#fff;border-radius:18px 4px 18px 18px;}
 
-    .typing-indicator{display:flex;gap:4px;align-items:center;padding:4px 0;}
-    .typing-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);animation:typingPulse 1.2s ease-in-out infinite;}
-    .typing-dot:nth-child(2){animation-delay:.2s;}
-    .typing-dot:nth-child(3){animation-delay:.4s;}
-    @keyframes typingPulse{0%,60%,100%{opacity:.3;transform:scale(1);}30%{opacity:1;transform:scale(1.25);}}
+        .typing-indicator{display:flex;gap:4px;align-items:center;padding:4px 0;}
+        .typing-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);animation:typingPulse 1.2s ease-in-out infinite;}
+        .typing-dot:nth-child(2){animation-delay:.2s;}
+        .typing-dot:nth-child(3){animation-delay:.4s;}
+        @keyframes typingPulse{0%,60%,100%{opacity:.3;transform:scale(1);}30%{opacity:1;transform:scale(1.25);}}
 
-    .chat-quick{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 14px;}
-    .quick-btn{background:rgba(255,77,0,.08);border:1px solid rgba(255,77,0,.2);border-radius:20px;padding:7px 14px;font-size:11px;color:#ff8c00;font-weight:700;cursor:pointer;transition:.25s;white-space:nowrap;}
-    .quick-btn:hover{background:rgba(255,77,0,.18);border-color:var(--accent-s);}
+        .chat-quick{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 14px;}
+        .quick-btn{background:rgba(255,77,0,.08);border:1px solid rgba(255,77,0,.2);border-radius:20px;padding:7px 14px;font-size:11px;color:#ff8c00;font-weight:700;cursor:pointer;transition:.25s;white-space:nowrap;}
+        .quick-btn:hover{background:rgba(255,77,0,.18);border-color:var(--accent-s);}
 
-    .chat-input-row{display:flex;gap:10px;padding:14px 16px;border-top:1px solid var(--border);}
-    #chat-input{
-        flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-        border-radius:16px;padding:12px 16px;color:#fff;font-size:13px;outline:none;
-        transition:.25s;resize:none;height:46px;line-height:1.4;
-    }
-    #chat-input:focus{border-color:rgba(255,77,0,.35);background:rgba(255,255,255,.06);}
-    #chat-input::placeholder{color:var(--dim);}
-    #chat-send{
-        width:46px;height:46px;border-radius:14px;border:none;
-        background:var(--accent);color:#fff;cursor:pointer;
-        display:flex;align-items:center;justify-content:center;font-size:15px;
-        transition:.25s;flex-shrink:0;
-    }
-    #chat-send:hover{opacity:.85;transform:scale(1.05);}
-    #chat-send:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+        .chat-input-row{display:flex;gap:10px;padding:14px 16px;border-top:1px solid var(--border);}
+        #chat-input{
+            flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+            border-radius:16px;padding:12px 16px;color:#fff;font-size:13px;outline:none;
+            transition:.25s;resize:none;height:46px;line-height:1.4;
+        }
+        #chat-input:focus{border-color:rgba(255,77,0,.35);background:rgba(255,255,255,.06);}
+        #chat-input::placeholder{color:var(--dim);}
+        #chat-send{
+            width:46px;height:46px;border-radius:14px;border:none;
+            background:var(--accent);color:#fff;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;font-size:15px;
+            transition:.25s;flex-shrink:0;
+        }
+        #chat-send:hover{opacity:.85;transform:scale(1.05);}
+        #chat-send:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
-    /* ── REVIEWS ── */
-    .rev-item{background:var(--card);border-radius:22px;padding:26px;border:1px solid var(--border);margin-bottom:18px;animation:slideUp .5s ease forwards;transition:.3s;}
-    .rev-item:hover{border-color:var(--border-h);}
-    .rev-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-    .rev-name{font-weight:900;color:var(--accent-s);font-size:14px;}
-    .rev-date{font-size:10px;color:#444;font-weight:700;}
-    .stars{color:#FFD700;font-size:10px;margin-bottom:8px;display:block;}
-    .stars i{text-shadow:0 0 8px rgba(255,215,0,.6);}
+        /* ── REVIEWS ── */
+        .rev-item{background:var(--card);border-radius:22px;padding:26px;border:1px solid var(--border);margin-bottom:18px;animation:slideUp .5s ease forwards;transition:.3s;}
+        .rev-item:hover{border-color:var(--border-h);}
+        .rev-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+        .rev-name{font-weight:900;color:var(--accent-s);font-size:14px;}
+        .rev-date{font-size:10px;color:#444;font-weight:700;}
+        .stars{color:#FFD700;font-size:10px;margin-bottom:8px;display:block;}
+        .stars i{text-shadow:0 0 8px rgba(255,215,0,.6);}
 
-    /* ── FOOTER BTN ── */
-    .footer-supp{
-        position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-        width:calc(100% - 36px);max-width:440px;
-        background:rgba(10,10,10,.92);color:#fff;padding:20px;border-radius:22px;
-        text-align:center;font-weight:800;z-index:100;backdrop-filter:blur(20px);
-        border:1px solid rgba(255,77,0,.18);box-shadow:0 12px 35px rgba(0,0,0,.7);
-        transition:.3s;cursor:pointer;font-size:14px;
-    }
-    .footer-supp:hover{border-color:var(--accent-s);}
+        /* ── FOOTER BTN ── */
+        .footer-supp{
+            position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+            width:calc(100% - 36px);max-width:440px;
+            background:rgba(10,10,10,.92);color:#fff;padding:20px;border-radius:22px;
+            text-align:center;font-weight:800;z-index:100;backdrop-filter:blur(20px);
+            border:1px solid rgba(255,77,0,.18);box-shadow:0 12px 35px rgba(0,0,0,.7);
+            transition:.3s;cursor:pointer;font-size:14px;
+        }
+        .footer-supp:hover{border-color:var(--accent-s);}
 
-    /* ── MODALS ── */
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(16px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
-    .modal{background:#090909;border:1px solid var(--border);width:100%;max-width:400px;padding:38px;border-radius:38px;text-align:center;position:relative;}
-    .close-btn{position:absolute;top:18px;right:22px;font-size:20px;color:var(--dim);cursor:pointer;transition:.3s;z-index:10;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;}
-    .close-btn:hover{color:#fff;background:rgba(255,255,255,.06);}
+        /* ── MODALS ── */
+        .overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(16px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
+        .modal{background:#090909;border:1px solid var(--border);width:100%;max-width:400px;padding:38px;border-radius:38px;text-align:center;position:relative;}
+        .close-btn{position:absolute;top:18px;right:22px;font-size:20px;color:var(--dim);cursor:pointer;transition:.3s;z-index:10;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;}
+        .close-btn:hover{color:#fff;background:rgba(255,255,255,.06);}
 
-    .buy-btn{background:var(--accent);color:#fff;border:none;width:100%;padding:18px;border-radius:18px;font-weight:900;font-size:14px;text-transform:uppercase;cursor:pointer;transition:.3s;letter-spacing:.5px;}
-    .buy-btn:hover{opacity:.88;transform:translateY(-2px);}
-    .usdt-hint{font-size:11px;color:var(--dim);margin-bottom:16px;}
-    .usdt-hint b{color:#ff8c00;}
-    input{width:100%;background:#0f0f0f;border:1px solid var(--border);padding:20px;border-radius:20px;color:#fff;margin:18px 0;text-align:center;font-size:17px;font-weight:800;outline:none;transition:.25s;}
-    input:focus{border-color:rgba(255,77,0,.4);}
-    .opt{background:#0f0f0f;padding:18px;border-radius:18px;margin-bottom:10px;display:flex;justify-content:space-between;border:1px solid var(--border);cursor:pointer;transition:.2s;}
-    .opt:hover{border-color:var(--accent-s);}
+        .buy-btn{background:var(--accent);color:#fff;border:none;width:100%;padding:18px;border-radius:18px;font-weight:900;font-size:14px;text-transform:uppercase;cursor:pointer;transition:.3s;letter-spacing:.5px;}
+        .buy-btn:hover{opacity:.88;transform:translateY(-2px);}
+        .usdt-hint{font-size:11px;color:var(--dim);margin-bottom:16px;}
+        .usdt-hint b{color:#ff8c00;}
+        input{width:100%;background:#0f0f0f;border:1px solid var(--border);padding:20px;border-radius:20px;color:#fff;margin:18px 0;text-align:center;font-size:17px;font-weight:800;outline:none;transition:.25s;}
+        input:focus{border-color:rgba(255,77,0,.4);}
+        .opt{background:#0f0f0f;padding:18px;border-radius:18px;margin-bottom:10px;display:flex;justify-content:space-between;border:1px solid var(--border);cursor:pointer;transition:.2s;}
+        .opt:hover{border-color:var(--accent-s);}
 
-    @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-</style>
-```
-
+        @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    </style>
 </head>
 <body>
 
@@ -258,7 +254,6 @@
 <div class="mesh"></div>
 
 <!-- ══ INTRO ══ -->
-
 <div id="intro-overlay">
     <div class="intro-content">
         <div class="intro-logo">GODLIKE SHOP</div>
@@ -275,98 +270,121 @@
 
 <div class="container">
 
-```
-<header>
-    <div class="logo">GODLIKE SHOP</div>
-    <div id="t-tag" class="tagline">LOADING...</div>
-</header>
+    <header>
+        <div class="logo">GODLIKE SHOP</div>
+        <div id="t-tag" class="tagline">LOADING...</div>
+    </header>
 
-<!-- ══ USER CARD ══ -->
-<div id="user-card">
-    <div class="user-avatar" id="u-avatar">?</div>
-    <div class="user-info">
-        <div class="user-name" id="u-name">—</div>
-        <div class="user-sub" id="u-sub">Telegram аккаунт</div>
-    </div>
-    <div class="user-badge" id="u-badge">🆕 Новичок</div>
-</div>
-
-<!-- Валюта -->
-<div class="selectors">
-    <button id="btn-ru" class="sel-btn active" onclick="setLocale('ru')">RUB</button>
-    <button id="btn-en" class="sel-btn"        onclick="setLocale('en')">USD</button>
-    <button id="btn-ua" class="sel-btn"        onclick="setLocale('ua')">UAH</button>
-</div>
-
-<!-- Статистика -->
-<div class="stats-grid">
-    <div class="stat-box"><span id="t-orders">ЗАКАЗОВ</span><b id="c-orders">...</b></div>
-    <div class="stat-box"><span id="t-clients">КЛИЕНТОВ</span><b id="c-clients">...</b></div>
-    <div class="stat-box online"><span id="t-online">ОНЛАЙН</span><b id="c-online">...</b></div>
-</div>
-
-<!-- Приватный Софт -->
-<div class="section-label"><i class="fa-solid fa-shield-halved"></i> <span id="t-soft-label">ПРИВАТНЫЙ СОФТ</span></div>
-<div id="soft-list"></div>
-
-<!-- Голда -->
-<div class="section-label"><i class="fa-solid fa-coins"></i> <span id="t-gold-label">ИГРОВАЯ ВАЛЮТА</span></div>
-<div class="gold-grid">
-    <div class="card ct">
-        <div class="card-glow"></div>
-        <i class="fa-solid fa-coins"></i>
-        <h3 id="t-buy-btn-title">КУПИТЬ ГОЛДУ</h3>
-        <p id="t-rate-buy">---</p>
-        <button class="buy-btn" id="t-buy-btn" onclick="openGoldInput('buy')">КУПИТЬ</button>
-    </div>
-    <div class="card ct">
-        <div class="card-glow"></div>
-        <i class="fa-solid fa-hand-holding-dollar"></i>
-        <h3 id="t-sell-btn-title">ПРОДАТЬ ГОЛДУ</h3>
-        <p id="t-rate-sell">---</p>
-        <button class="buy-btn" id="t-sell-btn" onclick="openGoldInput('sell')">ПРОДАТЬ</button>
-    </div>
-</div>
-
-<!-- AI ЧАТА ПОДДЕРЖКИ -->
-<div class="section-label"><i class="fa-solid fa-robot"></i> <span>ИИ-ПОДДЕРЖКА</span></div>
-<div class="chat-wrap">
-    <div class="chat-header">
-        <div class="chat-ai-avatar">🤖</div>
-        <div class="chat-ai-info">
-            <div class="chat-ai-name">GODLIKE AI</div>
-            <div class="chat-ai-status">онлайн</div>
+    <!-- ══ USER CARD ══ -->
+    <div id="user-card">
+        <div class="user-avatar" id="u-avatar">?</div>
+        <div class="user-info">
+            <div class="user-name" id="u-name">—</div>
+            <div class="user-sub" id="u-sub">Telegram аккаунт</div>
         </div>
-        <div class="chat-ai-hint">Отвечает мгновенно</div>
+        <div class="user-badge" id="u-badge">🆕 Новичок</div>
     </div>
 
-    <div id="chat-messages">
-        <!-- начальное сообщение рендерится JS -->
+    <!-- Валюта -->
+    <div class="selectors">
+        <button id="btn-ru" class="sel-btn active" onclick="setLocale('ru')">RUB</button>
+        <button id="btn-en" class="sel-btn"        onclick="setLocale('en')">USD</button>
+        <button id="btn-ua" class="sel-btn"        onclick="setLocale('ua')">UAH</button>
     </div>
 
-    <div class="chat-quick" id="quick-btns">
-        <div class="quick-btn" onclick="quickAsk('Сколько стоит подписка?')">💰 Цены</div>
-        <div class="quick-btn" onclick="quickAsk('Как оплатить?')">💳 Оплата</div>
-        <div class="quick-btn" onclick="quickAsk('Есть ли гарантия?')">🛡 Гарантия</div>
-        <div class="quick-btn" onclick="quickAsk('Как быстро получу товар?')">⚡ Доставка</div>
-        <div class="quick-btn" onclick="quickAsk('Работает ли на iOS?')">🍎 iOS</div>
+    <!-- Статистика -->
+    <div class="stats-grid">
+        <div class="stat-box"><span id="t-orders">ЗАКАЗОВ</span><b id="c-orders">...</b></div>
+        <div class="stat-box"><span id="t-clients">КЛИЕНТОВ</span><b id="c-clients">...</b></div>
+        <div class="stat-box online"><span id="t-online">ОНЛАЙН</span><b id="c-online">...</b></div>
     </div>
 
-    <div class="chat-input-row">
-        <textarea id="chat-input" placeholder="Написать вопрос..." rows="1" onkeydown="chatKeydown(event)"></textarea>
-        <button id="chat-send" onclick="sendChatMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+    <!-- Приватный Софт -->
+    <div class="section-label"><i class="fa-solid fa-shield-halved"></i> <span id="t-soft-label">ПРИВАТНЫЙ СОФТ</span></div>
+    <div id="soft-list"></div>
+
+    <!-- Голда -->
+    <div class="section-label"><i class="fa-solid fa-coins"></i> <span id="t-gold-label">ИГРОВАЯ ВАЛЮТА</span></div>
+    <div class="gold-grid">
+        <div class="card ct">
+            <div class="card-glow"></div>
+            <i class="fa-solid fa-coins"></i>
+            <h3 id="t-buy-btn-title">КУПИТЬ ГОЛДУ</h3>
+            <p id="t-rate-buy">---</p>
+            <button class="buy-btn" id="t-buy-btn" onclick="openGoldInput('buy')">КУПИТЬ</button>
+        </div>
+        <div class="card ct">
+            <div class="card-glow"></div>
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <h3 id="t-sell-btn-title">ПРОДАТЬ ГОЛДУ</h3>
+            <p id="t-rate-sell">---</p>
+            <button class="buy-btn" id="t-sell-btn" onclick="openGoldInput('sell')">ПРОДАТЬ</button>
+        </div>
     </div>
-</div>
 
-<!-- FAQ -->
-<div class="section-label"><i class="fa-solid fa-circle-question"></i> <span id="t-faq-label">FAQ</span></div>
-<div class="faq-grid" id="faq-container"></div>
+    <!-- ══ ПОЧЕМУ МЫ ══ -->
+    <div class="section-label"><i class="fa-solid fa-trophy"></i> <span>ПОЧЕМУ ВЫБИРАЮТ НАС</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:22px 18px;backdrop-filter:blur(15px);text-align:center;">
+            <div style="font-size:30px;margin-bottom:10px;">🛡</div>
+            <div style="font-weight:900;font-size:13px;margin-bottom:6px;">ANTI-BAN</div>
+            <div style="font-size:11px;color:var(--dim);line-height:1.5;">Гарантия на весь срок подписки</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:22px 18px;backdrop-filter:blur(15px);text-align:center;">
+            <div style="font-size:30px;margin-bottom:10px;">⚡</div>
+            <div style="font-weight:900;font-size:13px;margin-bottom:6px;">МОМЕНТАЛЬНО</div>
+            <div style="font-size:11px;color:var(--dim);line-height:1.5;">Выдача в течение 5–10 минут</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:22px 18px;backdrop-filter:blur(15px);text-align:center;">
+            <div style="font-size:30px;margin-bottom:10px;">🔄</div>
+            <div style="font-weight:900;font-size:13px;margin-bottom:6px;">ОБНОВЛЕНИЯ</div>
+            <div style="font-size:11px;color:var(--dim);line-height:1.5;">Обновляем в течение 24ч после патча</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:22px 18px;backdrop-filter:blur(15px);text-align:center;">
+            <div style="font-size:30px;margin-bottom:10px;">🕐</div>
+            <div style="font-weight:900;font-size:13px;margin-bottom:6px;">24/7 САППОРТ</div>
+            <div style="font-size:11px;color:var(--dim);line-height:1.5;">Операторы всегда онлайн</div>
+        </div>
+    </div>
 
-<!-- Отзывы -->
-<div class="section-label"><i class="fa-solid fa-star"></i> <span id="t-rev-label">ОТЗЫВЫ</span></div>
-<div id="reviews-container"></div>
-<button class="sel-btn" id="btn-more" style="width:100%;margin:20px 0;background:var(--glass);" onclick="showMore()">ПОКАЗАТЬ ЕЩЕ</button>
-```
+    <!-- AI ЧАТА ПОДДЕРЖКИ -->
+    <div class="section-label"><i class="fa-solid fa-robot"></i> <span>ИИ-ПОДДЕРЖКА</span></div>
+    <div class="chat-wrap">
+        <div class="chat-header">
+            <div class="chat-ai-avatar">🤖</div>
+            <div class="chat-ai-info">
+                <div class="chat-ai-name">GODLIKE AI</div>
+                <div class="chat-ai-status">онлайн</div>
+            </div>
+            <div class="chat-ai-hint">Отвечает мгновенно</div>
+        </div>
+
+        <div id="chat-messages">
+            <!-- начальное сообщение рендерится JS -->
+        </div>
+
+        <div class="chat-quick" id="quick-btns">
+            <div class="quick-btn" onclick="quickAsk('Сколько стоит подписка?')">💰 Цены</div>
+            <div class="quick-btn" onclick="quickAsk('Как оплатить?')">💳 Оплата</div>
+            <div class="quick-btn" onclick="quickAsk('Есть ли гарантия?')">🛡 Гарантия</div>
+            <div class="quick-btn" onclick="quickAsk('Как быстро получу товар?')">⚡ Доставка</div>
+            <div class="quick-btn" onclick="quickAsk('Работает ли на iOS?')">🍎 iOS</div>
+        </div>
+
+        <div class="chat-input-row">
+            <textarea id="chat-input" placeholder="Написать вопрос..." rows="1" onkeydown="chatKeydown(event)"></textarea>
+            <button id="chat-send" onclick="sendChatMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-label"><i class="fa-solid fa-circle-question"></i> <span id="t-faq-label">FAQ</span></div>
+    <div class="faq-grid" id="faq-container"></div>
+
+    <!-- Отзывы -->
+    <div class="section-label"><i class="fa-solid fa-star"></i> <span id="t-rev-label">ОТЗЫВЫ</span></div>
+    <div id="reviews-container"></div>
+    <button class="sel-btn" id="btn-more" style="width:100%;margin:20px 0;background:var(--glass);" onclick="showMore()">ПОКАЗАТЬ ЕЩЕ</button>
 
 </div>
 
@@ -376,7 +394,6 @@
 </div>
 
 <!-- Модалы -->
-
 <div id="m-price" class="overlay" onclick="closeModals()">
     <div class="modal" onclick="event.stopPropagation()">
         <i class="fa-solid fa-xmark close-btn" onclick="closeModals()"></i>
@@ -530,10 +547,15 @@ async function sendChatMsg() {
     try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': 'ВСТАВЬ_СВОЙ_ANTHROPIC_API_KEY',
+                'anthropic-version': '2023-06-01',
+                'anthropic-dangerous-direct-browser-access': 'true'
+            },
             body: JSON.stringify({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 1000,
+                model: 'claude-haiku-4-5-20251001',
+                max_tokens: 300,
                 system: CHAT_SYSTEM,
                 messages: chatHistory
             })
@@ -565,6 +587,23 @@ function quickAsk(text) {
 
 function chatKeydown(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMsg(); }
+}
+
+function applyPromo() {
+    // Открываем модал оплаты с уже вставленным промокодом если есть активный заказ
+    const banner = document.getElementById('promo-banner');
+    banner.style.background = 'linear-gradient(135deg,rgba(0,200,80,0.12),rgba(0,150,60,0.06))';
+    banner.style.borderColor = 'rgba(0,255,100,0.3)';
+    banner.querySelector('div:last-child').textContent = '✅ ПРИМЕНЁН';
+    banner.querySelector('div:last-child').style.background = 'linear-gradient(135deg,#006020,#00a030)';
+    // Запомним в сессии
+    sessionStorage.setItem('promo_applied', '1');
+    setTimeout(() => {
+        if (!order.product) {
+            banner.style.background = '';
+            banner.style.borderColor = '';
+        }
+    }, 3000);
 }
 
 function initChat() {
@@ -754,6 +793,5 @@ window.onload = () => {
     createSnowflakes();
 };
 </script>
-
 </body>
 </html>
